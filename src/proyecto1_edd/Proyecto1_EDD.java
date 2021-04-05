@@ -5,6 +5,11 @@
  */
 package proyecto1_edd;
 
+import Analizador.Generadores;
+import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 /**
  *
  * @author willi
@@ -32,6 +37,13 @@ public class Proyecto1_EDD {
         nueva.agregar_nodo("naranja", 3, 2);
         nueva.agregar_nodo("lima", 3, 3);
         nueva.printShort();
+        
+        Generadores prueba = new Generadores();
+        try {
+            prueba.prueba("2(4,5,\n#FFF;6,1,#333;)\nabc1:1,2,3,4;");
+        } catch (IOException ex) {
+            Logger.getLogger(Proyecto1_EDD.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
 }

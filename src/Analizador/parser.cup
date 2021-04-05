@@ -1,0 +1,120 @@
+package Analizador;
+
+import java_cup.runtime.Symbol;
+import java.util.ArrayList;
+import java.util.Map;
+import java.util.HashMap;
+
+parser code
+{:
+    private Symbol sym;
+    
+    public Symbol getS(){
+        return this.sym;
+    }
+
+    public void imp(String texto){
+        System.out.println(texto);
+    }
+
+    public void report_fatal_error(String message, Object info) {
+        System.out.println("reportfatal "+message+info);
+    }
+    public void report_fatal_error(Symbol cur) {
+        System.out.println("unrecovered_syntax_error");
+    }
+
+    protected int error_sync_size() {
+        return 1;
+    }
+
+:};
+
+terminal PARENTESISA,PARENTESISC,NUMERO,HEXA,COMA,PUNTOC,LLAVEA,LLAVEC,DOSP,NOMBRE;
+non terminal capas, capasP, bloque_param, params, bloque_paramP, capa, inicio, b, usuarios, bloque_imagenes, lista1,lista2,usuariosP, lista_imagenes,
+    lista_imagenesP, imagenes, imagenesP, imagen, bloque_imagenesP, usuario;
+
+
+start with inicio;
+
+inicio::=
+    NUMERO b
+    | usuarios
+;
+
+b::=
+    PARENTESISA bloque_param PARENTESISC capasP
+    | LLAVEA lista2 LLAVEC imagenesP
+;
+
+usuarios::=
+    usuario usuariosP
+;
+
+usuariosP::=
+    | usuarios
+;
+
+usuario::=
+    NOMBRE DOSP lista1 PUNTOC
+;
+
+lista1::=
+    | lista_imagenes
+;
+
+lista_imagenes::=
+    NUMERO lista_imagenesP
+;
+
+lista_imagenesP::=
+    | COMA lista_imagenes
+;
+
+capas::=
+    capa capasP
+;
+
+capasP::=
+    | capas
+;
+
+capa::=
+    NUMERO PARENTESISA bloque_param PARENTESISC
+;
+
+imagenes::=
+    imagen imagenesP
+;
+
+imagenesP::=
+    | imagenes
+;
+
+imagen::=
+    NUMERO LLAVEA lista2 LLAVEC
+;
+
+bloque_param ::=
+    params bloque_paramP
+;
+
+lista2::=
+    | bloque_imagenes
+;
+
+bloque_imagenes::=
+    NUMERO bloque_imagenesP
+;
+
+bloque_imagenesP::=
+    | COMA bloque_imagenes
+;
+
+bloque_paramP::=
+    | bloque_param
+;
+
+params::=
+    NUMERO COMA NUMERO COMA HEXA PUNTOC
+;
