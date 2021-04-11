@@ -9,6 +9,6 @@ package proyecto1_edd;
  *
  * @author willi
  */
-public class Controlador {
+public class Imagen {
     
 }

@@ -22,6 +22,9 @@ public class Capa {
         this.dispersa = null;
     }
 
+    public Capa() {
+    }
+
     public Capa getIzquierda() {
         return izquierda;
     }

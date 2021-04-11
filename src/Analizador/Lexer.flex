@@ -12,7 +12,7 @@ import java_cup.runtime.Symbol;
 L=[a-zA-Z]+
 H=#([a-fA-F0-9]{6}|[a-fA-F0-9]{3})
 D=[0-9]+
-esp = [ \n\t\r]+
+esp = [ |\n|\t|\r]+
 %state PARAMETROS
 %state IMAGENES
 %state USUARIOS

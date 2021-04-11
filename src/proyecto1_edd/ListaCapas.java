@@ -16,8 +16,7 @@ public class ListaCapas {
         raiz = null;
     }
 
-    public boolean insertarCapa(Capa nueva){
-        boolean temp = false;
+    public void insertarCapa(Capa nueva){
         if (raiz==null){
             raiz = nueva;
         } else {
@@ -40,7 +39,6 @@ public class ListaCapas {
                 }
             }
         }
-        return temp;
     }
     
     public Capa buscarCapa(int id){
@@ -57,6 +55,35 @@ public class ListaCapas {
             }
         }
         return retorno;
+    }
+    
+    public void recorrido_inOrden(Capa recorrida){
+        if (recorrida!=null){
+            recorrido_inOrden(recorrida.getIzquierda());
+            System.out.println(recorrida.getId());
+            recorrida.getDispersa().printShort();
+            String c = recorrida.getDispersa().obtener_color(10, 11);
+            System.out.println(c);
+            recorrido_inOrden(recorrida.getDerecha());
+        }
+    }
+    
+    public void recorrido_preOrden(Capa recorrida){
+        if (recorrida!=null){
+            System.out.println(recorrida.getId());
+            recorrida.getDispersa().printShort();
+            recorrido_inOrden(recorrida.getIzquierda());
+            recorrido_inOrden(recorrida.getDerecha());
+        }
+    }
+    
+    public void recorrido_postOrden(Capa recorrida){
+        if (recorrida!=null){
+            recorrido_inOrden(recorrida.getIzquierda());
+            recorrido_inOrden(recorrida.getDerecha());
+            System.out.println(recorrida.getId());
+            recorrida.getDispersa().printShort();
+        }
     }
     
     public Capa getRaiz() {

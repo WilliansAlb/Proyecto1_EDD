@@ -4,6 +4,9 @@ import java_cup.runtime.Symbol;
 import java.util.ArrayList;
 import java.util.Map;
 import java.util.HashMap;
+import proyecto1_edd.Capa;
+import proyecto1_edd.ListaCapas;
+import proyecto1_edd.Matriz;
 
 parser code
 {:
@@ -13,8 +16,24 @@ parser code
         return this.sym;
     }
 
+    public ListaCapas lista_capas = new ListaCapas();
+    public Capa temp_capa = new Capa();
+    public Matriz dispersa = new Matriz();
+
     public void imp(String texto){
         System.out.println(texto);
+    }
+
+    public void agregandoCapa(String id){
+        temp_capa.setId(Integer.parseInt(id)); 
+        temp_capa.setDispersa(dispersa); 
+        lista_capas.insertarCapa(temp_capa); 
+        dispersa = new Matriz(); 
+        temp_capa = new Capa();
+    }
+
+    public void agregandoNodo(String f1, String c1, String h1){
+        dispersa.agregarNodo(h1, Integer.parseInt(c1), Integer.parseInt(f1));
     }
 
     public void report_fatal_error(String message, Object info) {
@@ -38,7 +57,7 @@ non terminal capas, capasP, bloque_param, params, bloque_paramP, capa, inicio, b
 start with inicio;
 
 inicio::=
-    NUMERO b
+    capas {:imp("encuentra algo");:}
     | usuarios
 ;
 
@@ -80,7 +99,7 @@ capasP::=
 ;
 
 capa::=
-    NUMERO PARENTESISA bloque_param PARENTESISC
+    NUMERO:n1 PARENTESISA bloque_param PARENTESISC {: agregandoCapa(n1.toString()); :}
 ;
 
 imagenes::=
@@ -116,5 +135,5 @@ bloque_paramP::=
 ;
 
 params::=
-    NUMERO COMA NUMERO COMA HEXA PUNTOC
+    NUMERO:f1 COMA NUMERO:c1 COMA HEXA:h1 PUNTOC {: agregandoNodo(f1.toString(), c1.toString(), h1.toString()); :}
 ;

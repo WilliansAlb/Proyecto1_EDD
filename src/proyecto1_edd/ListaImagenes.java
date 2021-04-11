@@ -9,6 +9,8 @@ package proyecto1_edd;
  *
  * @author willi
  */
-public class NodoColumna {
+public class ListaImagenes {
+    private Imagen imagen;
+    
     
 }

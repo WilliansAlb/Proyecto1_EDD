@@ -29,6 +29,18 @@ public class Nodo {
         this.sigCol = sigCol;
     }
 
+    public Nodo(int x, int y, String color, Nodo sigFil, Nodo antFil, Nodo sigCol, Nodo antCol) {
+        this.x = x;
+        this.y = y;
+        this.color = color;
+        this.sigFil = sigFil;
+        this.antFil = antFil;
+        this.sigCol = sigCol;
+        this.antCol = antCol;
+    }
+
+    
+    
     public Nodo(Nodo sigFil, Nodo antFil, Nodo sigCol, Nodo antCol) {
         this.sigFil = null;
         this.antFil = null;
