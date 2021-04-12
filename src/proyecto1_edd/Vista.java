@@ -75,7 +75,6 @@ public class Vista extends javax.swing.JFrame {
         jLabel5 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         area_estado = new javax.swing.JTextArea();
-        jPanel2 = new javax.swing.JPanel();
         panel_ver_capa = new javax.swing.JPanel();
         label_img = new javax.swing.JLabel();
         panel_oculto = new javax.swing.JPanel();
@@ -125,7 +124,7 @@ public class Vista extends javax.swing.JFrame {
         jLabel18 = new javax.swing.JLabel();
         jcb_usuarios = new javax.swing.JComboBox<>();
         jLabel19 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
+        id_nueva_img = new javax.swing.JTextField();
         jScrollPane2 = new javax.swing.JScrollPane();
         table_capas = new javax.swing.JTable();
         jLabel20 = new javax.swing.JLabel();
@@ -274,19 +273,6 @@ public class Vista extends javax.swing.JFrame {
         );
 
         jtab_sistema.addTab("Carga de archivos", panel_carga);
-
-        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
-        jPanel2.setLayout(jPanel2Layout);
-        jPanel2Layout.setHorizontalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 874, Short.MAX_VALUE)
-        );
-        jPanel2Layout.setVerticalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 635, Short.MAX_VALUE)
-        );
-
-        jtab_sistema.addTab("Visualizar capas", jPanel2);
 
         panel_ver_capa.setBackground(new java.awt.Color(25, 25, 25));
 
@@ -789,7 +775,7 @@ public class Vista extends javax.swing.JFrame {
                             .addGroup(panel_agregar_imgLayout.createSequentialGroup()
                                 .addComponent(jLabel19)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jTextField1))
+                                .addComponent(id_nueva_img))
                             .addComponent(jButton3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 191, javax.swing.GroupLayout.PREFERRED_SIZE)))
@@ -809,7 +795,7 @@ public class Vista extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(panel_agregar_imgLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel19)
-                            .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(id_nueva_img, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(panel_agregar_imgLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel20)
@@ -858,336 +844,84 @@ public class Vista extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void btn_cargarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_cargarActionPerformed
-        JFileChooser chooser = new JFileChooser();
-        FileNameExtensionFilter filtro2 = new FileNameExtensionFilter("Archivo de capa", "cap");
-        chooser.setFileFilter(filtro2);
-        int resultado = chooser.showOpenDialog(this);
-        if (resultado == 0) {
-            File archivo = new File(chooser.getSelectedFile().getAbsolutePath());
-            String path = chooser.getSelectedFile().getAbsolutePath();
-            String nuevo = path;
-            label_path.setText("Archivo cap cargado: " + nuevo);
-            String ST;
-            try {
-                ST = new String(Files.readAllBytes(archivo.toPath()));
-                parser obtener = new parser(new Lexer(new StringReader(ST)));
-                try {
-                    obtener.parse();
-                    for (int i = 0; i < 10; i++) {
-                        System.out.println("   -----------   ");
-                    }
-                    estatica = obtener.lista_capas;
-                    if (estatica.getRaiz() != null) {
-                        area_estado.setText("Se ha cargado exitosamente el archivo cap, ahora se habilito el siguiente apartado (el de imagenes),\n ya puedes ver las capas en la pestaña ver capa");
-                        escribir_doc(estatica.escribir_doc());
-                        btn_cargar_img.setEnabled(true);
-                        btn_cargar.setEnabled(false);
-                        actualizar_listado_capas();
-                        escribir_doc(estatica.escribir_doc());
-                    } else {
-                        label_path.setText("No has cargado ningún archivo");
-                        area_estado.setText("El archivo que ingresaste no contenia ninguna capa, intenta ingresando otro archivo");
-                    }
-                } catch (Exception ex) {
-                    Logger.getLogger(Vista.class.getName()).log(Level.SEVERE, null, ex);
-                }
-            } catch (IOException ex) {
-                java.util.logging.Logger.getLogger(Vista.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-            }
-        } else {
-            label_path.setText("No has cargado ningún archivo");
-        }
-    }//GEN-LAST:event_btn_cargarActionPerformed
-
-    private void btn_buscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_buscarActionPerformed
-        String id = txt_id.getText();
-        int id_buscar = Integer.parseInt(id);
-        Capa encontrada = estatica.buscarCapa(id_buscar);
-        if (encontrada != null) {
-            generarImagen(encontrada);
-        } else {
-            JOptionPane.showMessageDialog(null, "No existe la capa!");
-        }
-    }//GEN-LAST:event_btn_buscarActionPerformed
-
-    private void btn_busquedaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_busquedaActionPerformed
-        String id = txt_busqueda.getText();
-        if (!id.isEmpty()) {
-            int id_buscar = Integer.parseInt(id);
-            if (estatica != null) {
-                Capa encontrada = estatica.buscarCapa(id_buscar);
-                String path2 = System.getProperty("user.dir");
-                String decodedPath = "";
-                try {
-                    decodedPath = URLDecoder.decode(path2, "UTF-8");
-                } catch (UnsupportedEncodingException ex) {
-                    Logger.getLogger(Vista.class.getName()).log(Level.SEVERE, null, ex);
-                }
-                if (encontrada != null) {
-                    String todos = encontrada.getDispersa().escribir_todos();
-                    escribir_doc(todos);
-                } else {
-                    label_img.setIcon(new ImageIcon(decodedPath + "/src/Graficar/busqueda.png"));
-                }
-            } else {
-                JOptionPane.showMessageDialog(null, "No has cargado ningun archivo!");
-            }
-        } else {
-            JOptionPane.showMessageDialog(null, "No ingresaste ningun id!");
-        }
-    }//GEN-LAST:event_btn_busquedaActionPerformed
-
-    private void btn_generar_recorridoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_generar_recorridoActionPerformed
-        String opcion = "";
-        System.out.println(estatica.escribir_doc());
-        if (!txt_no_capas.getText().isEmpty()) {
-            int cuantas = Integer.parseInt(txt_no_capas.getText());
-            switch (jcb_recorrido.getSelectedIndex()) {
-                case 0:
-                    opcion = estatica.recorrido_inOrden(estatica.getRaiz());
-                    break;
-                case 1:
-                    opcion = estatica.recorrido_preOrden(estatica.getRaiz());
-                    break;
-                case 2:
-                    opcion = estatica.recorrido_postOrden(estatica.getRaiz());
-                    break;
-                default:
-                    break;
-            }
-            if (!opcion.isEmpty()) {
-                String[] capas = opcion.split("-");
-                int[] no_capas = new int[capas.length];
-                for (int i = 0; i < capas.length; i++) {
-                    no_capas[i] = Integer.parseInt(capas[i]);
-                }
-                String recorrer = "Recorrido: ";
-                Matriz temporal = estatica.buscarCapa(no_capas[0]).getDispersa().obtener();
-                recorrer += capas[0] + " ";
-                if (cuantas <= capas.length) {
-                    for (int i = 1; i < cuantas; i++) {
-                        temporal.sumar_matriz(estatica.buscarCapa(no_capas[i]).getDispersa().obtener());
-                        recorrer += capas[i] + " ";
-                    }
-                    Capa imp = new Capa();
-                    imp.setDispersa(temporal);
-                    label_recorrido.setText(recorrer);
-                    generarImagen(imp);
-                } else {
-                    label_recorrido.setText("Acá se mostrara el recorrido con el que se generara la imagen");
-                    JOptionPane.showMessageDialog(null, "No hay tantas capas para generar la imagen!");
-                }
-            }
-        }
-    }//GEN-LAST:event_btn_generar_recorridoActionPerformed
-
-    private void btn_cargar_imgActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_cargar_imgActionPerformed
-        JFileChooser chooser = new JFileChooser();
-        FileNameExtensionFilter filtro2 = new FileNameExtensionFilter("Archivo de imagenes", "im");
-        chooser.setFileFilter(filtro2);
-        int resultado = chooser.showOpenDialog(this);
-        if (resultado == 0) {
-            File archivo = new File(chooser.getSelectedFile().getAbsolutePath());
-            String path = chooser.getSelectedFile().getAbsolutePath();
-            String nuevo = path;
-            label_path_img.setText("Archivo im cargado: " + nuevo);
-            String ST;
-            try {
-                ST = new String(Files.readAllBytes(archivo.toPath()));
-                parserImg obtener = new parserImg(new LexerImg(new StringReader(ST)));
-                obtener.setLista_capas(estatica);
-                try {
-                    obtener.parse();
-                    for (int i = 0; i < 10; i++) {
-                        System.out.println("   -----------   ");
-                    }
-                    estatica_img = obtener.lista_img;
-                    if (estatica_img.getRaiz() != null) {
-                        area_estado.setText("Se ha cargado exitosamente el archivo imp, ahora se habilito el siguiente apartado (el de usuarios),\n ya puedes ver las capas en la pestaña ver capa");
-                        btn_cargar_img.setEnabled(false);
-                        btn_cargar_usuarios.setEnabled(true);
-                    } else {
-                        label_path_img.setText("No has cargado ningún archivo");
-                        area_estado.setText("El archivo que ingresaste no contenia ninguna imagen, intenta ingresando otro archivo");
-                    }
-                } catch (Exception ex) {
-                    Logger.getLogger(Vista.class.getName()).log(Level.SEVERE, null, ex);
-                }
-            } catch (IOException ex) {
-                java.util.logging.Logger.getLogger(Vista.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-            }
-        } else {
-            label_path_img.setText("No has cargado ningún archivo");
-        }
-    }//GEN-LAST:event_btn_cargar_imgActionPerformed
-
-    private void btn_buscar_imgActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_buscar_imgActionPerformed
-        if (!txt_id_img.getText().isEmpty()) {
-            String texto = txt_id_img.getText();
-            if (verificarNumero(texto)) {
-                Imagen in = estatica_img.obtener_imagen(Integer.parseInt(texto));
-                if (in != null) {
-                    String op = in.obtener_superpuestos();
-                    if (!op.equalsIgnoreCase("SIN")) {
-                        String[] capas = op.split("-");
-                        int[] no_capas = new int[capas.length];
-                        int[] no_capas2 = new int[no_capas.length];
-                        for (int i = 0; i < capas.length; i++) {
-                            no_capas[i] = Integer.parseInt(capas[i]);
-                        }
-                        int conteo = 0;
-                        for (int i = (no_capas.length - 1); i >= 0; i--) {
-                            no_capas2[conteo] = no_capas[i];
-                            conteo++;
-                        }
-
-                        String recorrer = "Recorrido de superposicion: ";
-                        Matriz temporal = estatica.buscarCapa(no_capas2[0]).getDispersa().obtener();
-                        recorrer += no_capas2[0] + " ";
-                        for (int i = 1; i < capas.length; i++) {
-                            temporal.sumar_matriz(estatica.buscarCapa(no_capas2[i]).getDispersa().obtener());
-                            recorrer += no_capas2[i] + " ";
-                        }
-                        Capa imp = new Capa();
-                        imp.setDispersa(temporal);
-                        label_orden.setText(recorrer);
-                        generarImagen(imp);
-                    } else {
-                        Matriz temporal = new Matriz();
-                        temporal.agregarNodo("#000000", 0, 0);
-                        Capa imp = new Capa();
-                        imp.setDispersa(temporal);
-                        label_orden.setText("No contiene capas");
-                        generarImagen(imp);
-                    }
-                } else {
-                    JOptionPane.showMessageDialog(null, "No existe la imagen que tratas de generar!");
-                }
-            } else {
-                JOptionPane.showMessageDialog(null, "Tienes que ingresar un numero!");
-            }
-        } else {
-            JOptionPane.showMessageDialog(null, "Ingresa un numero primero!");
-        }
-    }//GEN-LAST:event_btn_buscar_imgActionPerformed
-
     private void jtab_sistemaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jtab_sistemaMouseClicked
         // TODO add your handling code here:
     }//GEN-LAST:event_jtab_sistemaMouseClicked
 
-    private void jcb_viendoItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_jcb_viendoItemStateChanged
-        if (jcb_viendo.getSelectedIndex() == 0) {
-            escribir_doc(estatica.escribir_doc());
-            panel_oculto.setVisible(false);
-            escribir_doc(estatica.escribir_doc());
-        } else if (jcb_viendo.getSelectedIndex() == 1) {
-            panel_oculto.setVisible(true);
-            panel_oculto.updateUI();
-        } else if (jcb_viendo.getSelectedIndex() == 2) {
-            escribir_doc(arbol.escribir_doc());
-            panel_oculto.setVisible(false);
-            escribir_doc(arbol.escribir_doc());
-        } else {
-            escribir_doc(estatica_img.escribir_doc());
-            panel_oculto.setVisible(false);
-            escribir_doc(estatica_img.escribir_doc());
-        }
-    }//GEN-LAST:event_jcb_viendoItemStateChanged
-
-    private void btn_cargar_usuariosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_cargar_usuariosActionPerformed
-        JFileChooser chooser = new JFileChooser();
-        FileNameExtensionFilter filtro2 = new FileNameExtensionFilter("Archivo de usuarios", "usr");
-        chooser.setFileFilter(filtro2);
-        int resultado = chooser.showOpenDialog(this);
-        if (resultado == 0) {
-            File archivo = new File(chooser.getSelectedFile().getAbsolutePath());
-            String path = chooser.getSelectedFile().getAbsolutePath();
-            String nuevo = path;
-            label_path_usr.setText("Archivo usr cargado: " + nuevo);
-            String ST;
-            try {
-                ST = new String(Files.readAllBytes(archivo.toPath()));
-                parser obtener = new parser(new Lexer(new StringReader(ST)));
-                obtener.setLista_imgs(estatica_img);
-                try {
-                    obtener.parse();
-                    for (int i = 0; i < 10; i++) {
-                        System.out.println("   -----------   ");
-                    }
-                    arbol = obtener.arbol_usr;
-                    if (arbol.getRaiz() != null) {
-                        area_estado.setText("Se ha cargado exitosamente el archivo usr, ahora se puedes utilizar correctamente el sistema");
-                        btn_cargar_usuarios.setEnabled(false);
-                        actualizar_listado_usuarios();
-                    } else {
-                        label_path_usr.setText("No has cargado ningún archivo");
-                        area_estado.setText("El archivo que ingresaste no contenia ninguna imagen, intenta ingresando otro archivo");
-                    }
-                } catch (Exception ex) {
-                    Logger.getLogger(Vista.class.getName()).log(Level.SEVERE, null, ex);
-                }
-            } catch (IOException ex) {
-                java.util.logging.Logger.getLogger(Vista.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-            }
-        } else {
-            label_path_usr.setText("No has cargado ningún archivo");
-        }
-    }//GEN-LAST:event_btn_cargar_usuariosActionPerformed
-
-    private void jcb_viendoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jcb_viendoActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jcb_viendoActionPerformed
-
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        if (jcb_viendo.getSelectedIndex() == 0) {
-            escribir_doc(estatica.escribir_doc());
-            panel_oculto.setVisible(false);
-            escribir_doc(estatica.escribir_doc());
-        } else if (jcb_viendo.getSelectedIndex() == 1) {
-            panel_oculto.setVisible(true);
-            panel_oculto.updateUI();
-        } else if (jcb_viendo.getSelectedIndex() == 2) {
-            escribir_doc(arbol.escribir_doc());
-            panel_oculto.setVisible(false);
-            escribir_doc(arbol.escribir_doc());
-        } else {
-            escribir_doc(estatica_img.escribir_doc());
-            panel_oculto.setVisible(false);
-            escribir_doc(estatica_img.escribir_doc());
-        }
-    }//GEN-LAST:event_jButton1ActionPerformed
-
-    private void btn_buscar_usuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_buscar_usuarioActionPerformed
-        String usuario = txt_usuario.getText();
-        if (!usuario.isEmpty()) {
-            arbol.recorrerHasta(arbol.getRaiz(), usuario);
-            int enco = arbol.encontraste;
-            if (enco != -1) {
-                NodoUsuario us = arbol.buscar(enco, arbol.getRaiz());
-                if (us != null) {
-                    UsuarioImagen partida = us.getInicio();
-                    if (partida != null) {
-                        jcb_lista_img.removeAllItems();
-                        while (partida != null) {
-                            jcb_lista_img.addItem(partida.getId() + "");
-                            partida = partida.getSiguiente();
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+        DefaultTableModel tb = (DefaultTableModel) table_capas.getModel();
+        String id_nueva = id_nueva_img.getText();
+        if (!id_nueva.isEmpty()) {
+            if (verificarNumero(id_nueva)) {
+                int nev = Integer.parseInt(id_nueva);
+                Imagen in = estatica_img.obtener_imagen(nev);
+                if (in == null) {
+                    if (table_capas.getRowCount() > 0) {
+                        int rows = table_capas.getRowCount();
+                        Imagen nue = new Imagen();
+                        nue.setId(nev);
+                        for (int i = 0; i < rows; i++) {
+                            int capa =  Integer.parseInt(table_capas.getValueAt(i, 0).toString());
+                            Capa es = estatica.buscarCapa(capa);
+                            NodoImagen op = new NodoImagen(capa, es);
+                            nue.agregar_nodo(op);
                         }
+                        estatica_img.agregar_imagen(nue);
+                        id_nueva_img.setText("");
+                        int a = table_capas.getRowCount() - 1;
+                        for (int i = a; i >= 0; i--) {
+                            tb.removeRow(tb.getRowCount() - 1);
+                        }
+                        JOptionPane.showMessageDialog(null, "Imagen ingresada correctamente");
                     } else {
-                        JOptionPane.showMessageDialog(null, "No ha creado imagenes!");
-                        jcb_lista_img.removeAllItems();
-                        jcb_lista_img.addItem("No tiene imagenes el usuario");
+                        JOptionPane.showMessageDialog(null, "Falta que agregues capas a la imagen");
                     }
                 } else {
-                    JOptionPane.showMessageDialog(null, "El usuario que ingresaste no existe!");
+                    JOptionPane.showMessageDialog(null, "La imagen que intentas crear ya existe");
                 }
-            } else {
-                JOptionPane.showMessageDialog(null, "El usuario que ingresaste no existe!");
             }
         } else {
-            JOptionPane.showMessageDialog(null, "Ingresa un usuario primero!");
+            JOptionPane.showMessageDialog(null, "Ingresa los campos primero");
         }
-    }//GEN-LAST:event_btn_buscar_usuarioActionPerformed
+    }//GEN-LAST:event_jButton3ActionPerformed
+
+    private void btn_agregar_imagenActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_agregar_imagenActionPerformed
+        String valor = jcb_capas.getSelectedItem().toString();
+        int cantidad = table_capas.getRowCount();
+        boolean existe = false;
+        for (int i = 0; i < cantidad; i++) {
+            if (table_capas.getValueAt(i, 0).toString().equalsIgnoreCase(valor)) {
+                existe = true;
+                break;
+            }
+        }
+        if (!existe) {
+            DefaultTableModel tb = (DefaultTableModel) table_capas.getModel();
+            Object[] ob = {valor};
+            tb.addRow(ob);
+        } else {
+            JOptionPane.showMessageDialog(null, "Ya ingresaste una vez la capa");
+        }
+    }//GEN-LAST:event_btn_agregar_imagenActionPerformed
+
+    private void btn_agregar_usuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_agregar_usuarioActionPerformed
+        if (!txt_nombre_user.getText().isEmpty()) {
+            String user = txt_nombre_user.getText();
+            arbol.recorrerHasta(arbol.getRaiz(), user);
+            int en = arbol.encontraste;
+            if (en == -1) {
+                NodoUsuario aIn = new NodoUsuario();
+                aIn.setNombreUsuario(user);
+                arbol.insertar(aIn);
+                actualizar_listado_usuarios();
+                JOptionPane.showMessageDialog(null, "Usuario ingresado correctamente");
+            } else {
+                JOptionPane.showMessageDialog(null, "El usuario ya existe");
+            }
+        } else {
+            JOptionPane.showMessageDialog(null, "Ingresa primero un nombre de usuario");
+        }
+    }//GEN-LAST:event_btn_agregar_usuarioActionPerformed
 
     private void btn_generar_usuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_generar_usuarioActionPerformed
         if (!jcb_lista_img.getSelectedItem().toString().isEmpty()) {
@@ -1239,51 +973,332 @@ public class Vista extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_btn_generar_usuarioActionPerformed
 
-    private void btn_agregar_usuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_agregar_usuarioActionPerformed
-        if (!txt_nombre_user.getText().isEmpty()) {
-            String user = txt_nombre_user.getText();
-            arbol.recorrerHasta(arbol.getRaiz(), user);
-            int en = arbol.encontraste;
-            if (en == -1) {
-                NodoUsuario aIn = new NodoUsuario();
-                aIn.setNombreUsuario(user);
-                arbol.insertar(aIn);
-                actualizar_listado_usuarios();
-                JOptionPane.showMessageDialog(null, "Usuario ingresado correctamente");
+    private void btn_buscar_usuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_buscar_usuarioActionPerformed
+        String usuario = txt_usuario.getText();
+        if (!usuario.isEmpty()) {
+            arbol.recorrerHasta(arbol.getRaiz(), usuario);
+            int enco = arbol.encontraste;
+            if (enco != -1) {
+                NodoUsuario us = arbol.buscar(enco, arbol.getRaiz());
+                if (us != null) {
+                    UsuarioImagen partida = us.getInicio();
+                    if (partida != null) {
+                        jcb_lista_img.removeAllItems();
+                        while (partida != null) {
+                            jcb_lista_img.addItem(partida.getId() + "");
+                            partida = partida.getSiguiente();
+                        }
+                    } else {
+                        JOptionPane.showMessageDialog(null, "No ha creado imagenes!");
+                        jcb_lista_img.removeAllItems();
+                        jcb_lista_img.addItem("No tiene imagenes el usuario");
+                    }
+                } else {
+                    JOptionPane.showMessageDialog(null, "El usuario que ingresaste no existe!");
+                }
             } else {
-                JOptionPane.showMessageDialog(null, "El usuario ya existe");
+                JOptionPane.showMessageDialog(null, "El usuario que ingresaste no existe!");
             }
         } else {
-            JOptionPane.showMessageDialog(null, "Ingresa primero un nombre de usuario");
+            JOptionPane.showMessageDialog(null, "Ingresa un usuario primero!");
         }
-    }//GEN-LAST:event_btn_agregar_usuarioActionPerformed
+    }//GEN-LAST:event_btn_buscar_usuarioActionPerformed
 
-    private void btn_agregar_imagenActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_agregar_imagenActionPerformed
-        String valor = jcb_capas.getSelectedItem().toString();
-        int cantidad = table_capas.getRowCount();
-        boolean existe = false;
-        for (int i = 0; i < cantidad; i++) {
-            if (table_capas.getValueAt(i, 0).toString().equalsIgnoreCase(valor)) {
-                existe = true;
+    private void btn_buscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_buscarActionPerformed
+        String id = txt_id.getText();
+        int id_buscar = Integer.parseInt(id);
+        Capa encontrada = estatica.buscarCapa(id_buscar);
+        if (encontrada != null) {
+            generarImagen(encontrada);
+        } else {
+            JOptionPane.showMessageDialog(null, "No existe la capa!");
+        }
+    }//GEN-LAST:event_btn_buscarActionPerformed
+
+    private void btn_buscar_imgActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_buscar_imgActionPerformed
+        if (!txt_id_img.getText().isEmpty()) {
+            String texto = txt_id_img.getText();
+            if (verificarNumero(texto)) {
+                Imagen in = estatica_img.obtener_imagen(Integer.parseInt(texto));
+                if (in != null) {
+                    String op = in.obtener_superpuestos();
+                    if (!op.equalsIgnoreCase("SIN")) {
+                        String[] capas = op.split("-");
+                        int[] no_capas = new int[capas.length];
+                        int[] no_capas2 = new int[no_capas.length];
+                        for (int i = 0; i < capas.length; i++) {
+                            no_capas[i] = Integer.parseInt(capas[i]);
+                        }
+                        int conteo = 0;
+                        for (int i = (no_capas.length - 1); i >= 0; i--) {
+                            no_capas2[conteo] = no_capas[i];
+                            conteo++;
+                        }
+
+                        String recorrer = "Recorrido de superposicion: ";
+                        Matriz temporal = estatica.buscarCapa(no_capas2[0]).getDispersa().obtener();
+                        recorrer += no_capas2[0] + " ";
+                        for (int i = 1; i < capas.length; i++) {
+                            temporal.sumar_matriz(estatica.buscarCapa(no_capas2[i]).getDispersa().obtener());
+                            recorrer += no_capas2[i] + " ";
+                        }
+                        Capa imp = new Capa();
+                        imp.setDispersa(temporal);
+                        label_orden.setText(recorrer);
+                        generarImagen(imp);
+                    } else {
+                        Matriz temporal = new Matriz();
+                        temporal.agregarNodo("#000000", 0, 0);
+                        Capa imp = new Capa();
+                        imp.setDispersa(temporal);
+                        label_orden.setText("No contiene capas");
+                        generarImagen(imp);
+                    }
+                } else {
+                    JOptionPane.showMessageDialog(null, "No existe la imagen que tratas de generar!");
+                }
+            } else {
+                JOptionPane.showMessageDialog(null, "Tienes que ingresar un numero!");
+            }
+        } else {
+            JOptionPane.showMessageDialog(null, "Ingresa un numero primero!");
+        }
+    }//GEN-LAST:event_btn_buscar_imgActionPerformed
+
+    private void btn_generar_recorridoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_generar_recorridoActionPerformed
+        String opcion = "";
+        System.out.println(estatica.escribir_doc());
+        if (!txt_no_capas.getText().isEmpty()) {
+            int cuantas = Integer.parseInt(txt_no_capas.getText());
+            switch (jcb_recorrido.getSelectedIndex()) {
+                case 0:
+                opcion = estatica.recorrido_inOrden(estatica.getRaiz());
+                break;
+                case 1:
+                opcion = estatica.recorrido_preOrden(estatica.getRaiz());
+                break;
+                case 2:
+                opcion = estatica.recorrido_postOrden(estatica.getRaiz());
+                break;
+                default:
                 break;
             }
+            if (!opcion.isEmpty()) {
+                String[] capas = opcion.split("-");
+                int[] no_capas = new int[capas.length];
+                for (int i = 0; i < capas.length; i++) {
+                    no_capas[i] = Integer.parseInt(capas[i]);
+                }
+                String recorrer = "Recorrido: ";
+                Matriz temporal = estatica.buscarCapa(no_capas[0]).getDispersa().obtener();
+                recorrer += capas[0] + " ";
+                if (cuantas <= capas.length) {
+                    for (int i = 1; i < cuantas; i++) {
+                        temporal.sumar_matriz(estatica.buscarCapa(no_capas[i]).getDispersa().obtener());
+                        recorrer += capas[i] + " ";
+                    }
+                    Capa imp = new Capa();
+                    imp.setDispersa(temporal);
+                    label_recorrido.setText(recorrer);
+                    generarImagen(imp);
+                } else {
+                    label_recorrido.setText("Acá se mostrara el recorrido con el que se generara la imagen");
+                    JOptionPane.showMessageDialog(null, "No hay tantas capas para generar la imagen!");
+                }
+            }
         }
-        if (!existe) {
-            DefaultTableModel tb = (DefaultTableModel) table_capas.getModel();
-            Object[] ob = {valor};
-            tb.addRow(ob);
-        } else {
-            JOptionPane.showMessageDialog(null, "Ya ingresaste una vez la capa");
-        }
-    }//GEN-LAST:event_btn_agregar_imagenActionPerformed
+    }//GEN-LAST:event_btn_generar_recorridoActionPerformed
 
-    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-        DefaultTableModel tb = (DefaultTableModel) table_capas.getModel();
-        int a = table_capas.getRowCount() - 1;
-        for (int i = a; i >= 0; i--) {
-            tb.removeRow(tb.getRowCount() - 1);
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        if (jcb_viendo.getSelectedIndex() == 0) {
+            escribir_doc(estatica.escribir_doc());
+            panel_oculto.setVisible(false);
+            escribir_doc(estatica.escribir_doc());
+        } else if (jcb_viendo.getSelectedIndex() == 1) {
+            panel_oculto.setVisible(true);
+            panel_oculto.updateUI();
+        } else if (jcb_viendo.getSelectedIndex() == 2) {
+            escribir_doc(arbol.escribir_doc());
+            panel_oculto.setVisible(false);
+            escribir_doc(arbol.escribir_doc());
+        } else {
+            escribir_doc(estatica_img.escribir_doc());
+            panel_oculto.setVisible(false);
+            escribir_doc(estatica_img.escribir_doc());
         }
-    }//GEN-LAST:event_jButton3ActionPerformed
+    }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jcb_viendoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jcb_viendoActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jcb_viendoActionPerformed
+
+    private void jcb_viendoItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_jcb_viendoItemStateChanged
+        if (jcb_viendo.getSelectedIndex() == 0) {
+            escribir_doc(estatica.escribir_doc());
+            panel_oculto.setVisible(false);
+            escribir_doc(estatica.escribir_doc());
+        } else if (jcb_viendo.getSelectedIndex() == 1) {
+            panel_oculto.setVisible(true);
+            panel_oculto.updateUI();
+        } else if (jcb_viendo.getSelectedIndex() == 2) {
+            escribir_doc(arbol.escribir_doc());
+            panel_oculto.setVisible(false);
+            escribir_doc(arbol.escribir_doc());
+        } else {
+            escribir_doc(estatica_img.escribir_doc());
+            panel_oculto.setVisible(false);
+            escribir_doc(estatica_img.escribir_doc());
+        }
+    }//GEN-LAST:event_jcb_viendoItemStateChanged
+
+    private void btn_busquedaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_busquedaActionPerformed
+        String id = txt_busqueda.getText();
+        if (!id.isEmpty()) {
+            int id_buscar = Integer.parseInt(id);
+            if (estatica != null) {
+                Capa encontrada = estatica.buscarCapa(id_buscar);
+                String path2 = System.getProperty("user.dir");
+                String decodedPath = "";
+                try {
+                    decodedPath = URLDecoder.decode(path2, "UTF-8");
+                } catch (UnsupportedEncodingException ex) {
+                    Logger.getLogger(Vista.class.getName()).log(Level.SEVERE, null, ex);
+                }
+                if (encontrada != null) {
+                    String todos = encontrada.getDispersa().escribir_todos();
+                    escribir_doc(todos);
+                } else {
+                    label_img.setIcon(new ImageIcon(decodedPath + "/src/Graficar/busqueda.png"));
+                }
+            } else {
+                JOptionPane.showMessageDialog(null, "No has cargado ningun archivo!");
+            }
+        } else {
+            JOptionPane.showMessageDialog(null, "No ingresaste ningun id!");
+        }
+    }//GEN-LAST:event_btn_busquedaActionPerformed
+
+    private void btn_cargar_usuariosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_cargar_usuariosActionPerformed
+        JFileChooser chooser = new JFileChooser();
+        FileNameExtensionFilter filtro2 = new FileNameExtensionFilter("Archivo de usuarios", "usr");
+        chooser.setFileFilter(filtro2);
+        int resultado = chooser.showOpenDialog(this);
+        if (resultado == 0) {
+            File archivo = new File(chooser.getSelectedFile().getAbsolutePath());
+            String path = chooser.getSelectedFile().getAbsolutePath();
+            String nuevo = path;
+            label_path_usr.setText("Archivo usr cargado: " + nuevo);
+            String ST;
+            try {
+                ST = new String(Files.readAllBytes(archivo.toPath()));
+                parser obtener = new parser(new Lexer(new StringReader(ST)));
+                obtener.setLista_imgs(estatica_img);
+                try {
+                    obtener.parse();
+                    for (int i = 0; i < 10; i++) {
+                        System.out.println("   -----------   ");
+                    }
+                    arbol = obtener.arbol_usr;
+                    if (arbol.getRaiz() != null) {
+                        area_estado.setText("Se ha cargado exitosamente el archivo usr, ahora se puedes utilizar correctamente el sistema");
+                        btn_cargar_usuarios.setEnabled(false);
+                        actualizar_listado_usuarios();
+                    } else {
+                        label_path_usr.setText("No has cargado ningún archivo");
+                        area_estado.setText("El archivo que ingresaste no contenia ninguna imagen, intenta ingresando otro archivo");
+                    }
+                } catch (Exception ex) {
+                    Logger.getLogger(Vista.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            } catch (IOException ex) {
+                java.util.logging.Logger.getLogger(Vista.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            }
+        } else {
+            label_path_usr.setText("No has cargado ningún archivo");
+        }
+    }//GEN-LAST:event_btn_cargar_usuariosActionPerformed
+
+    private void btn_cargar_imgActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_cargar_imgActionPerformed
+        JFileChooser chooser = new JFileChooser();
+        FileNameExtensionFilter filtro2 = new FileNameExtensionFilter("Archivo de imagenes", "im");
+        chooser.setFileFilter(filtro2);
+        int resultado = chooser.showOpenDialog(this);
+        if (resultado == 0) {
+            File archivo = new File(chooser.getSelectedFile().getAbsolutePath());
+            String path = chooser.getSelectedFile().getAbsolutePath();
+            String nuevo = path;
+            label_path_img.setText("Archivo im cargado: " + nuevo);
+            String ST;
+            try {
+                ST = new String(Files.readAllBytes(archivo.toPath()));
+                parserImg obtener = new parserImg(new LexerImg(new StringReader(ST)));
+                obtener.setLista_capas(estatica);
+                try {
+                    obtener.parse();
+                    for (int i = 0; i < 10; i++) {
+                        System.out.println("   -----------   ");
+                    }
+                    estatica_img = obtener.lista_img;
+                    if (estatica_img.getRaiz() != null) {
+                        area_estado.setText("Se ha cargado exitosamente el archivo imp, ahora se habilito el siguiente apartado (el de usuarios),\n ya puedes ver las capas en la pestaña ver capa");
+                        btn_cargar_img.setEnabled(false);
+                        btn_cargar_usuarios.setEnabled(true);
+                    } else {
+                        label_path_img.setText("No has cargado ningún archivo");
+                        area_estado.setText("El archivo que ingresaste no contenia ninguna imagen, intenta ingresando otro archivo");
+                    }
+                } catch (Exception ex) {
+                    Logger.getLogger(Vista.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            } catch (IOException ex) {
+                java.util.logging.Logger.getLogger(Vista.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            }
+        } else {
+            label_path_img.setText("No has cargado ningún archivo");
+        }
+    }//GEN-LAST:event_btn_cargar_imgActionPerformed
+
+    private void btn_cargarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_cargarActionPerformed
+        JFileChooser chooser = new JFileChooser();
+        FileNameExtensionFilter filtro2 = new FileNameExtensionFilter("Archivo de capa", "cap");
+        chooser.setFileFilter(filtro2);
+        int resultado = chooser.showOpenDialog(this);
+        if (resultado == 0) {
+            File archivo = new File(chooser.getSelectedFile().getAbsolutePath());
+            String path = chooser.getSelectedFile().getAbsolutePath();
+            String nuevo = path;
+            label_path.setText("Archivo cap cargado: " + nuevo);
+            String ST;
+            try {
+                ST = new String(Files.readAllBytes(archivo.toPath()));
+                parser obtener = new parser(new Lexer(new StringReader(ST)));
+                try {
+                    obtener.parse();
+                    for (int i = 0; i < 10; i++) {
+                        System.out.println("   -----------   ");
+                    }
+                    estatica = obtener.lista_capas;
+                    if (estatica.getRaiz() != null) {
+                        area_estado.setText("Se ha cargado exitosamente el archivo cap, ahora se habilito el siguiente apartado (el de imagenes),\n ya puedes ver las capas en la pestaña ver capa");
+                        escribir_doc(estatica.escribir_doc());
+                        btn_cargar_img.setEnabled(true);
+                        btn_cargar.setEnabled(false);
+                        actualizar_listado_capas();
+                        escribir_doc(estatica.escribir_doc());
+                    } else {
+                        label_path.setText("No has cargado ningún archivo");
+                        area_estado.setText("El archivo que ingresaste no contenia ninguna capa, intenta ingresando otro archivo");
+                    }
+                } catch (Exception ex) {
+                    Logger.getLogger(Vista.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            } catch (IOException ex) {
+                java.util.logging.Logger.getLogger(Vista.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            }
+        } else {
+            label_path.setText("No has cargado ningún archivo");
+        }
+    }//GEN-LAST:event_btn_cargarActionPerformed
 
     /**
      * @param args the command line arguments
@@ -1589,6 +1604,7 @@ public class Vista extends javax.swing.JFrame {
     private javax.swing.JButton btn_cargar_usuarios;
     private javax.swing.JButton btn_generar_recorrido;
     private javax.swing.JButton btn_generar_usuario;
+    private javax.swing.JTextField id_nueva_img;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton3;
     private javax.swing.JLabel jLabel1;
@@ -1612,10 +1628,8 @@ public class Vista extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JTextField jTextField1;
     private javax.swing.JComboBox<String> jcb_capas;
     private javax.swing.JComboBox<String> jcb_lista_img;
     private javax.swing.JComboBox<String> jcb_recorrido;

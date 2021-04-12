@@ -129,21 +129,29 @@ public class ListaImagenes {
     }
 
     public String escribir_doc() {
-        System.out.println("llega");
         Imagen reco = raiz;
         String retorno = inicioGraph;
         String otro = "{ rank = same; ";
+        boolean prueba = false;
         do {
             retorno += "nodeIMG" + reco.getId() + "[label = \"IMAGEN - " + reco.getId() + "\"];\n";
-            otro += "nodeIMG" + reco.getId()+"; ";
+            otro += "nodeIMG" + reco.getId() + "; ";
             if (reco.getInicio() != null) {
                 NodoImagen par = reco.getInicio();
-                while (par.getSiguiente() != null) {
-                    retorno += "nodeCAP" + par.getId()+"_"+reco.getId()+ "[label = \"CAPA - " + par.getId() + "\"];\n";
-                    retorno += "nodeCAP" + par.getSiguiente().getId()+"_"+reco.getId()+ "[label = \"CAPA - " + par.getSiguiente().getId() + "\"];\n";
-                    retorno += "\"nodeCAP" + par.getId()+"_"+reco.getId() + "\" -> \"nodeCAP" + par.getSiguiente().getId()+"_"+reco.getId() + "\";\n";
-                    if (par == reco.getInicio()) {
-                        retorno += "\"nodeIMG" + reco.getId() + "\" -> \"nodeCAP" + par.getId()+"_"+reco.getId() + "\";\n";
+                while (par != null) {
+                    if (par.getSiguiente() != null) {
+                        retorno += "nodeCAP" + par.getId() + "_" + reco.getId() + "[label = \"CAPA - " + par.getId() + "\"];\n";
+                        retorno += "nodeCAP" + par.getSiguiente().getId() + "_" + reco.getId() + "[label = \"CAPA - " + par.getSiguiente().getId() + "\"];\n";
+                        retorno += "\"nodeCAP" + par.getId() + "_" + reco.getId() + "\" -> \"nodeCAP" + par.getSiguiente().getId() + "_" + reco.getId() + "\";\n";
+                        if (par == reco.getInicio()) {
+                            retorno += "\"nodeIMG" + reco.getId() + "\" -> \"nodeCAP" + par.getId() + "_" + reco.getId() + "\";\n";
+                        }
+                        prueba = true;
+                    } else {
+                        if (par == reco.getInicio()) {
+                            retorno += "nodeCAP" + par.getId() + "_" + reco.getId() + "[label = \"CAPA - " + par.getId() + "\"];\n";
+                            retorno += "\"nodeIMG" + reco.getId() + "\" -> \"nodeCAP" + par.getId() + "_" + reco.getId() + "\";\n";
+                        }
                     }
                     par = par.getSiguiente();
                 }
@@ -152,7 +160,7 @@ public class ListaImagenes {
             retorno += "\"nodeIMG" + reco.getSiguiente().getId() + "\" -> \"nodeIMG" + reco.getId() + "\";\n";
             reco = reco.getSiguiente();
         } while (reco != raiz);
-        retorno += otro+"}";
+        retorno += otro + "}";
         retorno += "}";
         System.out.println(retorno);
         return retorno;
