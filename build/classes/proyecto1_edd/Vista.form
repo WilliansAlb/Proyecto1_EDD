@@ -281,8 +281,8 @@
           </Properties>
           <Constraints>
             <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout" value="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout$JTabbedPaneConstraintsDescription">
-              <JTabbedPaneConstraints tabName="Ver capa">
-                <Property name="tabTitle" type="java.lang.String" value="Ver capa"/>
+              <JTabbedPaneConstraints tabName="Graficas de estado de memoria">
+                <Property name="tabTitle" type="java.lang.String" value="Graficas de estado de memoria"/>
               </JTabbedPaneConstraints>
             </Constraint>
           </Constraints>
@@ -296,7 +296,7 @@
                           <Group type="102" alignment="1" attributes="0">
                               <Component id="panel_oculto" max="32767" attributes="0"/>
                               <EmptySpace min="-2" max="-2" attributes="0"/>
-                              <Component id="jButton1" max="32767" attributes="0"/>
+                              <Component id="btn_de_nuevo" max="32767" attributes="0"/>
                           </Group>
                           <Group type="102" alignment="1" attributes="0">
                               <Component id="jLabel15" max="32767" attributes="0"/>
@@ -324,7 +324,7 @@
                           </Group>
                           <Group type="102" attributes="0">
                               <EmptySpace max="32767" attributes="0"/>
-                              <Component id="jButton1" min="-2" pref="61" max="-2" attributes="0"/>
+                              <Component id="btn_de_nuevo" min="-2" pref="61" max="-2" attributes="0"/>
                           </Group>
                       </Group>
                       <EmptySpace min="-2" pref="34" max="-2" attributes="0"/>
@@ -395,7 +395,7 @@
                     <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                       <Color blue="90" green="ff" red="d7" type="rgb"/>
                     </Property>
-                    <Property name="text" type="java.lang.String" value="ID capa buscada:"/>
+                    <Property name="text" type="java.lang.String" value="ID buscado:"/>
                   </Properties>
                 </Component>
                 <Component class="javax.swing.JButton" name="btn_busqueda">
@@ -415,7 +415,7 @@
                       <Color blue="90" green="ff" red="d7" type="rgb"/>
                     </Property>
                     <Property name="horizontalAlignment" type="int" value="0"/>
-                    <Property name="text" type="java.lang.String" value="Ingresa el ID de la capa que buscas, si existe se te mostrar&#xe1; su estructura"/>
+                    <Property name="text" type="java.lang.String" value="Se muestra el resultado de tu busqueda si todo fue como lo planeado"/>
                   </Properties>
                 </Component>
               </SubComponents>
@@ -423,11 +423,12 @@
             <Component class="javax.swing.JComboBox" name="jcb_viendo">
               <Properties>
                 <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
-                  <StringArray count="4">
+                  <StringArray count="5">
                     <StringItem index="0" value="Listado de capas"/>
                     <StringItem index="1" value="Capa"/>
                     <StringItem index="2" value="Listado de usuarios"/>
                     <StringItem index="3" value="Listado de imagenes"/>
+                    <StringItem index="4" value="Imagen y arbol"/>
                   </StringArray>
                 </Property>
               </Properties>
@@ -450,12 +451,12 @@
                 <Property name="text" type="java.lang.String" value="VER:"/>
               </Properties>
             </Component>
-            <Component class="javax.swing.JButton" name="jButton1">
+            <Component class="javax.swing.JButton" name="btn_de_nuevo">
               <Properties>
                 <Property name="text" type="java.lang.String" value="DE NUEVO"/>
               </Properties>
               <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButton1ActionPerformed"/>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btn_de_nuevoActionPerformed"/>
               </Events>
             </Component>
           </SubComponents>

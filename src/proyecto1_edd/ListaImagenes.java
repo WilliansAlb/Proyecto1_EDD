@@ -162,6 +162,41 @@ public class ListaImagenes {
         } while (reco != raiz);
         retorno += otro + "}";
         retorno += "}";
+        return retorno;
+    }
+
+    public String improvisando(int identificador, ListaCapas mandada) {
+        Imagen reco = raiz;
+        String retorno = "digraph G{\n"
+            + "node [shape = record,height=.1];";
+        do {
+            if (identificador == reco.getId()) {
+                retorno += "nodeIMG" + reco.getId() + "[label = \"IMAGEN - " + reco.getId() + "\"];\n";
+                NodoImagen par = reco.getInicio();
+                while (par != null) {
+                    if (par.getSiguiente() != null) {
+                        retorno += "nodeCAP" + par.getId() + "_" + reco.getId() + "[label = \"CAPA - " + par.getId() + "\"];\n";
+                        retorno += "\"nodeCAP" + par.getId() + "_" + reco.getId() + "\" -> \"node" + par.getId() + "\":f1;\n";
+                        retorno += "\"nodeCAP" + par.getSiguiente().getId() + "_" + reco.getId() + "\" -> \"node" + par.getSiguiente().getId() + "\":f1;\n";
+                        retorno += "nodeCAP" + par.getSiguiente().getId() + "_" + reco.getId() + "[label = \"CAPA - " + par.getSiguiente().getId() + "\"];\n";
+                        retorno += "\"nodeCAP" + par.getId() + "_" + reco.getId() + "\" -> \"nodeCAP" + par.getSiguiente().getId() + "_" + reco.getId() + "\";\n";
+                        if (par == reco.getInicio()) {
+                            retorno += "\"nodeIMG" + reco.getId() + "\" -> \"nodeCAP" + par.getId() + "_" + reco.getId() + "\";\n";
+                        }
+                    } else {
+                        if (par == reco.getInicio()) {
+                            retorno += "nodeCAP" + par.getId() + "_" + reco.getId() + "[label = \"CAPA - " + par.getId() + "\"];\n";
+                            retorno += "\"nodeIMG" + reco.getId() + "\" -> \"nodeCAP" + par.getId() + "_" + reco.getId() + "\";\n";
+                            retorno += "\"nodeCAP" + par.getId() + "_" + reco.getId() + "\" -> \"node" + par.getId() + "\":f1;\n";
+                        }
+                    }
+                    par = par.getSiguiente();
+                }
+            }
+            reco = reco.getSiguiente();
+        } while (reco != raiz);
+        retorno += mandada.recorrido(mandada.getRaiz());
+        retorno += "}";
         System.out.println(retorno);
         return retorno;
     }

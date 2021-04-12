@@ -84,7 +84,7 @@ public class Vista extends javax.swing.JFrame {
         label_capa = new javax.swing.JLabel();
         jcb_viendo = new javax.swing.JComboBox<>();
         jLabel15 = new javax.swing.JLabel();
-        jButton1 = new javax.swing.JButton();
+        btn_de_nuevo = new javax.swing.JButton();
         panel_generar = new javax.swing.JPanel();
         panelBotones = new javax.swing.JPanel();
         label_generada = new javax.swing.JLabel();
@@ -283,7 +283,7 @@ public class Vista extends javax.swing.JFrame {
 
         jLabel2.setBackground(new java.awt.Color(25, 25, 25));
         jLabel2.setForeground(new java.awt.Color(215, 255, 144));
-        jLabel2.setText("ID capa buscada:");
+        jLabel2.setText("ID buscado:");
 
         btn_busqueda.setText("BUSCAR");
         btn_busqueda.addActionListener(new java.awt.event.ActionListener() {
@@ -295,7 +295,7 @@ public class Vista extends javax.swing.JFrame {
         label_capa.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
         label_capa.setForeground(new java.awt.Color(215, 255, 144));
         label_capa.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        label_capa.setText("Ingresa el ID de la capa que buscas, si existe se te mostrará su estructura");
+        label_capa.setText("Se muestra el resultado de tu busqueda si todo fue como lo planeado");
 
         javax.swing.GroupLayout panel_ocultoLayout = new javax.swing.GroupLayout(panel_oculto);
         panel_oculto.setLayout(panel_ocultoLayout);
@@ -326,7 +326,7 @@ public class Vista extends javax.swing.JFrame {
                 .addContainerGap())
         );
 
-        jcb_viendo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Listado de capas", "Capa", "Listado de usuarios", "Listado de imagenes" }));
+        jcb_viendo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Listado de capas", "Capa", "Listado de usuarios", "Listado de imagenes", "Imagen y arbol" }));
         jcb_viendo.addItemListener(new java.awt.event.ItemListener() {
             public void itemStateChanged(java.awt.event.ItemEvent evt) {
                 jcb_viendoItemStateChanged(evt);
@@ -342,10 +342,10 @@ public class Vista extends javax.swing.JFrame {
         jLabel15.setForeground(new java.awt.Color(216, 255, 144));
         jLabel15.setText("VER:");
 
-        jButton1.setText("DE NUEVO");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        btn_de_nuevo.setText("DE NUEVO");
+        btn_de_nuevo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                btn_de_nuevoActionPerformed(evt);
             }
         });
 
@@ -359,7 +359,7 @@ public class Vista extends javax.swing.JFrame {
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panel_ver_capaLayout.createSequentialGroup()
                         .addComponent(panel_oculto, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addComponent(btn_de_nuevo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panel_ver_capaLayout.createSequentialGroup()
                         .addComponent(jLabel15, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -380,13 +380,13 @@ public class Vista extends javax.swing.JFrame {
                         .addComponent(panel_oculto, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(panel_ver_capaLayout.createSequentialGroup()
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 61, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(btn_de_nuevo, javax.swing.GroupLayout.PREFERRED_SIZE, 61, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(34, 34, 34)
                 .addComponent(label_img, javax.swing.GroupLayout.PREFERRED_SIZE, 492, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
-        jtab_sistema.addTab("Ver capa", panel_ver_capa);
+        jtab_sistema.addTab("Graficas de estado de memoria", panel_ver_capa);
 
         panel_generar.setBackground(new java.awt.Color(25, 25, 25));
 
@@ -861,7 +861,7 @@ public class Vista extends javax.swing.JFrame {
                         Imagen nue = new Imagen();
                         nue.setId(nev);
                         for (int i = 0; i < rows; i++) {
-                            int capa =  Integer.parseInt(table_capas.getValueAt(i, 0).toString());
+                            int capa = Integer.parseInt(table_capas.getValueAt(i, 0).toString());
                             Capa es = estatica.buscarCapa(capa);
                             NodoImagen op = new NodoImagen(capa, es);
                             nue.agregar_nodo(op);
@@ -1067,21 +1067,20 @@ public class Vista extends javax.swing.JFrame {
 
     private void btn_generar_recorridoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_generar_recorridoActionPerformed
         String opcion = "";
-        System.out.println(estatica.escribir_doc());
         if (!txt_no_capas.getText().isEmpty()) {
             int cuantas = Integer.parseInt(txt_no_capas.getText());
             switch (jcb_recorrido.getSelectedIndex()) {
                 case 0:
-                opcion = estatica.recorrido_inOrden(estatica.getRaiz());
-                break;
+                    opcion = estatica.recorrido_inOrden(estatica.getRaiz());
+                    break;
                 case 1:
-                opcion = estatica.recorrido_preOrden(estatica.getRaiz());
-                break;
+                    opcion = estatica.recorrido_preOrden(estatica.getRaiz());
+                    break;
                 case 2:
-                opcion = estatica.recorrido_postOrden(estatica.getRaiz());
-                break;
+                    opcion = estatica.recorrido_postOrden(estatica.getRaiz());
+                    break;
                 default:
-                break;
+                    break;
             }
             if (!opcion.isEmpty()) {
                 String[] capas = opcion.split("-");
@@ -1109,7 +1108,7 @@ public class Vista extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_btn_generar_recorridoActionPerformed
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void btn_de_nuevoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_de_nuevoActionPerformed
         if (jcb_viendo.getSelectedIndex() == 0) {
             escribir_doc(estatica.escribir_doc());
             panel_oculto.setVisible(false);
@@ -1126,7 +1125,7 @@ public class Vista extends javax.swing.JFrame {
             panel_oculto.setVisible(false);
             escribir_doc(estatica_img.escribir_doc());
         }
-    }//GEN-LAST:event_jButton1ActionPerformed
+    }//GEN-LAST:event_btn_de_nuevoActionPerformed
 
     private void jcb_viendoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jcb_viendoActionPerformed
         // TODO add your handling code here:
@@ -1137,45 +1136,79 @@ public class Vista extends javax.swing.JFrame {
             escribir_doc(estatica.escribir_doc());
             panel_oculto.setVisible(false);
             escribir_doc(estatica.escribir_doc());
+            btn_de_nuevo.setVisible(true);
         } else if (jcb_viendo.getSelectedIndex() == 1) {
             panel_oculto.setVisible(true);
             panel_oculto.updateUI();
+            btn_de_nuevo.setVisible(false);
         } else if (jcb_viendo.getSelectedIndex() == 2) {
             escribir_doc(arbol.escribir_doc());
             panel_oculto.setVisible(false);
             escribir_doc(arbol.escribir_doc());
-        } else {
+            btn_de_nuevo.setVisible(true);
+        } else if (jcb_viendo.getSelectedIndex() == 3){
             escribir_doc(estatica_img.escribir_doc());
             panel_oculto.setVisible(false);
             escribir_doc(estatica_img.escribir_doc());
+            btn_de_nuevo.setVisible(true);
+        } else {
+            panel_oculto.setVisible(true);
+            panel_oculto.updateUI();
+            btn_de_nuevo.setVisible(false);
         }
     }//GEN-LAST:event_jcb_viendoItemStateChanged
 
     private void btn_busquedaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_busquedaActionPerformed
         String id = txt_busqueda.getText();
-        if (!id.isEmpty()) {
-            int id_buscar = Integer.parseInt(id);
-            if (estatica != null) {
-                Capa encontrada = estatica.buscarCapa(id_buscar);
-                String path2 = System.getProperty("user.dir");
-                String decodedPath = "";
-                try {
-                    decodedPath = URLDecoder.decode(path2, "UTF-8");
-                } catch (UnsupportedEncodingException ex) {
-                    Logger.getLogger(Vista.class.getName()).log(Level.SEVERE, null, ex);
-                }
-                if (encontrada != null) {
-                    String todos = encontrada.getDispersa().escribir_todos();
-                    escribir_doc(todos);
+        if (jcb_viendo.getSelectedItem().toString().equalsIgnoreCase("Imagen y arbol")) {
+            if (!id.isEmpty()) {
+                int id_buscar = Integer.parseInt(id);
+                if (estatica_img != null) {
+                    Imagen encontrada = estatica_img.obtener_imagen(id_buscar);
+                    String path2 = System.getProperty("user.dir");
+                    String decodedPath = "";
+                    try {
+                        decodedPath = URLDecoder.decode(path2, "UTF-8");
+                    } catch (UnsupportedEncodingException ex) {
+                        Logger.getLogger(Vista.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                    if (encontrada != null) {
+                        escribir_doc(estatica_img.improvisando(id_buscar, estatica));
+                    } else {
+                        label_img.setIcon(new ImageIcon(decodedPath + "/src/Graficar/busqueda.png"));
+                    }
                 } else {
-                    label_img.setIcon(new ImageIcon(decodedPath + "/src/Graficar/busqueda.png"));
+                    JOptionPane.showMessageDialog(null, "No has cargado ningun archivo!");
                 }
             } else {
-                JOptionPane.showMessageDialog(null, "No has cargado ningun archivo!");
+                JOptionPane.showMessageDialog(null, "No ingresaste ningun id!");
             }
         } else {
-            JOptionPane.showMessageDialog(null, "No ingresaste ningun id!");
+            if (!id.isEmpty()) {
+                int id_buscar = Integer.parseInt(id);
+                if (estatica != null) {
+                    Capa encontrada = estatica.buscarCapa(id_buscar);
+                    String path2 = System.getProperty("user.dir");
+                    String decodedPath = "";
+                    try {
+                        decodedPath = URLDecoder.decode(path2, "UTF-8");
+                    } catch (UnsupportedEncodingException ex) {
+                        Logger.getLogger(Vista.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                    if (encontrada != null) {
+                        String todos = encontrada.getDispersa().escribir_todos();
+                        escribir_doc(todos);
+                    } else {
+                        label_img.setIcon(new ImageIcon(decodedPath + "/src/Graficar/busqueda.png"));
+                    }
+                } else {
+                    JOptionPane.showMessageDialog(null, "No has cargado ningun archivo!");
+                }
+            } else {
+                JOptionPane.showMessageDialog(null, "No ingresaste ningun id!");
+            }
         }
+
     }//GEN-LAST:event_btn_busquedaActionPerformed
 
     private void btn_cargar_usuariosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_cargar_usuariosActionPerformed
@@ -1602,10 +1635,10 @@ public class Vista extends javax.swing.JFrame {
     private javax.swing.JButton btn_cargar;
     private javax.swing.JButton btn_cargar_img;
     private javax.swing.JButton btn_cargar_usuarios;
+    private javax.swing.JButton btn_de_nuevo;
     private javax.swing.JButton btn_generar_recorrido;
     private javax.swing.JButton btn_generar_usuario;
     private javax.swing.JTextField id_nueva_img;
-    private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton3;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
