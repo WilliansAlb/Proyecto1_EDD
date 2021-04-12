@@ -4,9 +4,7 @@ import java_cup.runtime.Symbol;
 import java.util.ArrayList;
 import java.util.Map;
 import java.util.HashMap;
-import proyecto1_edd.Capa;
-import proyecto1_edd.ListaCapas;
-import proyecto1_edd.Matriz;
+import proyecto1_edd.*;
 
 parser code
 {:
@@ -17,7 +15,10 @@ parser code
     }
 
     public ListaCapas lista_capas = new ListaCapas();
+    public ArbolUsuarios arbol_usr = new ArbolUsuarios();
+    private ListaImagenes lista_imgs = new ListaImagenes();
     public Capa temp_capa = new Capa();
+    public NodoUsuario temp_usr = new NodoUsuario();
     public Matriz dispersa = new Matriz();
 
     public void imp(String texto){
@@ -30,6 +31,29 @@ parser code
         lista_capas.insertarCapa(temp_capa); 
         dispersa = new Matriz(); 
         temp_capa = new Capa();
+    }
+
+    public void setLista_imgs(ListaImagenes lista_imgs){
+        this.lista_imgs = lista_imgs;
+    }
+
+    public void agregandoUsuarioImagen(String id_img){
+        int idimg = Integer.parseInt(id_img);
+        Imagen prueba = lista_imgs.obtener_imagen(idimg);
+        if (prueba!=null){
+            UsuarioImagen nuimg = new UsuarioImagen();
+            nuimg.setId(idimg);
+            nuimg.setActual(prueba);
+            temp_usr.agregar_nodo(nuimg);
+        } else {
+            imp("no existe la imagen");
+        }
+    }
+
+    public void agregandoUsuario(String nombre){
+        temp_usr.setNombreUsuario(nombre);
+        arbol_usr.insertar(temp_usr);
+        temp_usr = new NodoUsuario();
     }
 
     public void agregandoNodo(String f1, String c1, String h1){
@@ -50,20 +74,15 @@ parser code
 :};
 
 terminal PARENTESISA,PARENTESISC,NUMERO,HEXA,COMA,PUNTOC,LLAVEA,LLAVEC,DOSP,NOMBRE;
-non terminal capas, capasP, bloque_param, params, bloque_paramP, capa, inicio, b, usuarios, bloque_imagenes, lista1,lista2,usuariosP, lista_imagenes,
-    lista_imagenesP, imagenes, imagenesP, imagen, bloque_imagenesP, usuario;
+non terminal capas, capasP, bloque_param, params, bloque_paramP, capa, inicio, usuarios, lista1,usuariosP, 
+    usuario, lista_imagenes, lista_imagenesP;
 
 
 start with inicio;
 
 inicio::=
-    capas {:imp("encuentra algo");:}
+    capas
     | usuarios
-;
-
-b::=
-    PARENTESISA bloque_param PARENTESISC capasP
-    | LLAVEA lista2 LLAVEC imagenesP
 ;
 
 usuarios::=
@@ -75,7 +94,7 @@ usuariosP::=
 ;
 
 usuario::=
-    NOMBRE DOSP lista1 PUNTOC
+    NOMBRE:u1 DOSP lista1 PUNTOC {: agregandoUsuario(u1.toString()); :}
 ;
 
 lista1::=
@@ -83,7 +102,7 @@ lista1::=
 ;
 
 lista_imagenes::=
-    NUMERO lista_imagenesP
+    NUMERO:n1 lista_imagenesP {: agregandoUsuarioImagen(n1.toString()); :}
 ;
 
 lista_imagenesP::=
@@ -102,32 +121,8 @@ capa::=
     NUMERO:n1 PARENTESISA bloque_param PARENTESISC {: agregandoCapa(n1.toString()); :}
 ;
 
-imagenes::=
-    imagen imagenesP
-;
-
-imagenesP::=
-    | imagenes
-;
-
-imagen::=
-    NUMERO LLAVEA lista2 LLAVEC
-;
-
 bloque_param ::=
     params bloque_paramP
-;
-
-lista2::=
-    | bloque_imagenes
-;
-
-bloque_imagenes::=
-    NUMERO bloque_imagenesP
-;
-
-bloque_imagenesP::=
-    | COMA bloque_imagenes
 ;
 
 bloque_paramP::=

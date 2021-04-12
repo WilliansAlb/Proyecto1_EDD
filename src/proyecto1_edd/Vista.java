@@ -6,7 +6,9 @@
 package proyecto1_edd;
 
 import Analizador.Lexer;
+import Analizador.LexerImg;
 import Analizador.parser;
+import Analizador.parserImg;
 import java.awt.Color;
 import java.awt.Image;
 import java.io.BufferedWriter;
@@ -24,8 +26,11 @@ import static javafx.scene.paint.Color.web;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFileChooser;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JTable;
 import javax.swing.filechooser.FileNameExtensionFilter;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -34,12 +39,16 @@ import javax.swing.filechooser.FileNameExtensionFilter;
 public class Vista extends javax.swing.JFrame {
 
     public ListaCapas estatica;
+    public ListaImagenes estatica_img;
+    public ArbolUsuarios arbol;
 
     /**
      * Creates new form Vista
      */
     public Vista() {
         initComponents();
+        this.setLocationRelativeTo(null);
+        panel_oculto.setVisible(false);
     }
 
     /**
@@ -51,28 +60,89 @@ public class Vista extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jTabbedPane1 = new javax.swing.JTabbedPane();
-        jPanel1 = new javax.swing.JPanel();
+        jtab_sistema = new javax.swing.JTabbedPane();
+        panel_carga = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         label_path = new javax.swing.JLabel();
         btn_cargar = new javax.swing.JButton();
+        jLabel3 = new javax.swing.JLabel();
+        jLabel4 = new javax.swing.JLabel();
+        label_path_img = new javax.swing.JLabel();
+        btn_cargar_img = new javax.swing.JButton();
+        jLabel6 = new javax.swing.JLabel();
+        label_path_usr = new javax.swing.JLabel();
+        btn_cargar_usuarios = new javax.swing.JButton();
+        jLabel5 = new javax.swing.JLabel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        area_estado = new javax.swing.JTextArea();
         jPanel2 = new javax.swing.JPanel();
-        jPanel3 = new javax.swing.JPanel();
-        txt_busqueda = new javax.swing.JTextField();
-        btn_busqueda = new javax.swing.JButton();
+        panel_ver_capa = new javax.swing.JPanel();
         label_img = new javax.swing.JLabel();
-        label_capa = new javax.swing.JLabel();
+        panel_oculto = new javax.swing.JPanel();
+        txt_busqueda = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
-        jPanel4 = new javax.swing.JPanel();
+        btn_busqueda = new javax.swing.JButton();
+        label_capa = new javax.swing.JLabel();
+        jcb_viendo = new javax.swing.JComboBox<>();
+        jLabel15 = new javax.swing.JLabel();
+        jButton1 = new javax.swing.JButton();
+        panel_generar = new javax.swing.JPanel();
         panelBotones = new javax.swing.JPanel();
+        label_generada = new javax.swing.JLabel();
+        jtab_generar = new javax.swing.JTabbedPane();
+        panel_recorrido = new javax.swing.JPanel();
+        jLabel9 = new javax.swing.JLabel();
+        txt_no_capas = new javax.swing.JFormattedTextField();
+        btn_generar_recorrido = new javax.swing.JButton();
+        jcb_recorrido = new javax.swing.JComboBox<>();
+        jLabel10 = new javax.swing.JLabel();
+        jLabel11 = new javax.swing.JLabel();
+        label_recorrido = new javax.swing.JLabel();
+        panel_lista = new javax.swing.JPanel();
+        jLabel12 = new javax.swing.JLabel();
+        txt_id_img = new javax.swing.JTextField();
+        btn_buscar_img = new javax.swing.JButton();
+        label_orden = new javax.swing.JLabel();
+        panel_capa = new javax.swing.JPanel();
         txt_id = new javax.swing.JTextField();
         btn_buscar = new javax.swing.JButton();
+        jLabel8 = new javax.swing.JLabel();
+        panel_usuario = new javax.swing.JPanel();
+        jLabel13 = new javax.swing.JLabel();
+        txt_usuario = new javax.swing.JTextField();
+        btn_buscar_usuario = new javax.swing.JButton();
+        jLabel14 = new javax.swing.JLabel();
+        jcb_lista_img = new javax.swing.JComboBox<>();
+        btn_generar_usuario = new javax.swing.JButton();
+        jPanel1 = new javax.swing.JPanel();
+        panel_agregar_usuario = new javax.swing.JPanel();
+        jLabel7 = new javax.swing.JLabel();
+        jLabel16 = new javax.swing.JLabel();
+        txt_nombre_user = new javax.swing.JTextField();
+        btn_agregar_usuario = new javax.swing.JButton();
+        panel_agregar_img = new javax.swing.JPanel();
+        jLabel17 = new javax.swing.JLabel();
+        jLabel18 = new javax.swing.JLabel();
+        jcb_usuarios = new javax.swing.JComboBox<>();
+        jLabel19 = new javax.swing.JLabel();
+        jTextField1 = new javax.swing.JTextField();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        table_capas = new javax.swing.JTable();
+        jLabel20 = new javax.swing.JLabel();
+        jcb_capas = new javax.swing.JComboBox<>();
+        btn_agregar_imagen = new javax.swing.JButton();
+        jButton3 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        jTabbedPane1.setBackground(new java.awt.Color(25, 25, 25));
+        jtab_sistema.setBackground(new java.awt.Color(25, 25, 25));
+        jtab_sistema.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jtab_sistemaMouseClicked(evt);
+            }
+        });
 
-        jPanel1.setBackground(new java.awt.Color(25, 25, 25));
+        panel_carga.setBackground(new java.awt.Color(25, 25, 25));
 
         jLabel1.setFont(new java.awt.Font("Arial Black", 1, 18)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(216, 255, 144));
@@ -80,7 +150,7 @@ public class Vista extends javax.swing.JFrame {
         jLabel1.setText("CARGA DE ARCHIVOS");
 
         label_path.setForeground(new java.awt.Color(216, 255, 144));
-        label_path.setText("No has cargado ningún archivo");
+        label_path.setText("No has cargado ningún archivo .cap");
 
         btn_cargar.setText("CARGAR");
         btn_cargar.addActionListener(new java.awt.event.ActionListener() {
@@ -89,48 +159,145 @@ public class Vista extends javax.swing.JFrame {
             }
         });
 
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
+        jLabel3.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
+        jLabel3.setForeground(new java.awt.Color(216, 255, 144));
+        jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel3.setText("------CARGA DE USUARIOS-------");
+
+        jLabel4.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
+        jLabel4.setForeground(new java.awt.Color(216, 255, 144));
+        jLabel4.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel4.setText("------CARGA DE CAPAS-------");
+
+        label_path_img.setForeground(new java.awt.Color(216, 255, 144));
+        label_path_img.setText("No has cargado ningún archivo .im");
+
+        btn_cargar_img.setText("CARGAR");
+        btn_cargar_img.setEnabled(false);
+        btn_cargar_img.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_cargar_imgActionPerformed(evt);
+            }
+        });
+
+        jLabel6.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
+        jLabel6.setForeground(new java.awt.Color(216, 255, 144));
+        jLabel6.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel6.setText("------CARGA DE IMAGENES-------");
+
+        label_path_usr.setForeground(new java.awt.Color(216, 255, 144));
+        label_path_usr.setText("No has cargado ningún archivo .usr");
+
+        btn_cargar_usuarios.setText("CARGAR");
+        btn_cargar_usuarios.setEnabled(false);
+        btn_cargar_usuarios.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_cargar_usuariosActionPerformed(evt);
+            }
+        });
+
+        jLabel5.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
+        jLabel5.setForeground(new java.awt.Color(216, 255, 144));
+        jLabel5.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel5.setText("ESTADO DEL SISTEMA");
+
+        area_estado.setEditable(false);
+        area_estado.setBackground(new java.awt.Color(50, 50, 50));
+        area_estado.setColumns(20);
+        area_estado.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
+        area_estado.setRows(5);
+        area_estado.setText("Debes ingresar un archivo tipo cap en el apartado correspondiente para poder habilitar el proximo apartado");
+        jScrollPane1.setViewportView(area_estado);
+
+        javax.swing.GroupLayout panel_cargaLayout = new javax.swing.GroupLayout(panel_carga);
+        panel_carga.setLayout(panel_cargaLayout);
+        panel_cargaLayout.setHorizontalGroup(
+            panel_cargaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panel_cargaLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(label_path, javax.swing.GroupLayout.DEFAULT_SIZE, 707, Short.MAX_VALUE)
+                .addGroup(panel_cargaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jScrollPane1)
+                    .addComponent(jLabel5, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jLabel1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 862, Short.MAX_VALUE)
+                    .addGroup(panel_cargaLayout.createSequentialGroup()
+                        .addComponent(label_path, javax.swing.GroupLayout.DEFAULT_SIZE, 778, Short.MAX_VALUE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btn_cargar)))
+                        .addComponent(btn_cargar))
+                    .addComponent(jLabel3, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, panel_cargaLayout.createSequentialGroup()
+                        .addComponent(label_path_img, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btn_cargar_img))
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, panel_cargaLayout.createSequentialGroup()
+                        .addComponent(label_path_usr, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btn_cargar_usuarios))
+                    .addComponent(jLabel6, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
+            .addGroup(panel_cargaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(panel_cargaLayout.createSequentialGroup()
+                    .addContainerGap()
+                    .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addContainerGap()))
         );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
+        panel_cargaLayout.setVerticalGroup(
+            panel_cargaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panel_cargaLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jLabel1)
+                .addGap(39, 39, 39)
+                .addGroup(panel_cargaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btn_cargar)
+                    .addComponent(label_path))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(label_path)
-                    .addComponent(btn_cargar))
-                .addContainerGap(492, Short.MAX_VALUE))
+                .addComponent(jLabel6)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(panel_cargaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(label_path_img)
+                    .addComponent(btn_cargar_img))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel3)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(panel_cargaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(label_path_usr)
+                    .addComponent(btn_cargar_usuarios))
+                .addGap(18, 18, 18)
+                .addComponent(jLabel5)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 352, Short.MAX_VALUE)
+                .addContainerGap())
+            .addGroup(panel_cargaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(panel_cargaLayout.createSequentialGroup()
+                    .addGap(48, 48, 48)
+                    .addComponent(jLabel4)
+                    .addContainerGap(568, Short.MAX_VALUE)))
         );
 
-        jTabbedPane1.addTab("Carga de archivos", jPanel1);
+        jtab_sistema.addTab("Carga de archivos", panel_carga);
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 803, Short.MAX_VALUE)
+            .addGap(0, 874, Short.MAX_VALUE)
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 562, Short.MAX_VALUE)
+            .addGap(0, 635, Short.MAX_VALUE)
         );
 
-        jTabbedPane1.addTab("Visualizar capas", jPanel2);
+        jtab_sistema.addTab("Visualizar capas", jPanel2);
 
-        jPanel3.setBackground(new java.awt.Color(25, 25, 25));
+        panel_ver_capa.setBackground(new java.awt.Color(25, 25, 25));
+
+        label_img.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        label_img.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Graficar/busqueda.png"))); // NOI18N
+
+        panel_oculto.setBackground(new java.awt.Color(50, 50, 50));
+
+        jLabel2.setBackground(new java.awt.Color(25, 25, 25));
+        jLabel2.setForeground(new java.awt.Color(215, 255, 144));
+        jLabel2.setText("ID capa buscada:");
 
         btn_busqueda.setText("BUSCAR");
         btn_busqueda.addActionListener(new java.awt.event.ActionListener() {
@@ -139,64 +306,248 @@ public class Vista extends javax.swing.JFrame {
             }
         });
 
-        label_img.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        label_img.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Graficar/busqueda.png"))); // NOI18N
-
         label_capa.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
         label_capa.setForeground(new java.awt.Color(215, 255, 144));
         label_capa.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         label_capa.setText("Ingresa el ID de la capa que buscas, si existe se te mostrará su estructura");
 
-        jLabel2.setBackground(new java.awt.Color(25, 25, 25));
-        jLabel2.setForeground(new java.awt.Color(215, 255, 144));
-        jLabel2.setText("ID capa buscada:");
-
-        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
-        jPanel3.setLayout(jPanel3Layout);
-        jPanel3Layout.setHorizontalGroup(
-            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel3Layout.createSequentialGroup()
+        javax.swing.GroupLayout panel_ocultoLayout = new javax.swing.GroupLayout(panel_oculto);
+        panel_oculto.setLayout(panel_ocultoLayout);
+        panel_ocultoLayout.setHorizontalGroup(
+            panel_ocultoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panel_ocultoLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(label_img, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addComponent(jLabel2)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(txt_busqueda, javax.swing.GroupLayout.PREFERRED_SIZE, 604, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jLabel2)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(txt_busqueda, javax.swing.GroupLayout.PREFERRED_SIZE, 569, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btn_busqueda, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
+            .addComponent(label_capa, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+        );
+        panel_ocultoLayout.setVerticalGroup(
+            panel_ocultoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panel_ocultoLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(panel_ocultoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                    .addGroup(panel_ocultoLayout.createSequentialGroup()
+                        .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(8, 8, 8))
+                    .addComponent(btn_busqueda, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(txt_busqueda, javax.swing.GroupLayout.Alignment.LEADING))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(label_capa, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
+        );
+
+        jcb_viendo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Listado de capas", "Capa", "Listado de usuarios", "Listado de imagenes" }));
+        jcb_viendo.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                jcb_viendoItemStateChanged(evt);
+            }
+        });
+        jcb_viendo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jcb_viendoActionPerformed(evt);
+            }
+        });
+
+        jLabel15.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
+        jLabel15.setForeground(new java.awt.Color(216, 255, 144));
+        jLabel15.setText("VER:");
+
+        jButton1.setText("DE NUEVO");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout panel_ver_capaLayout = new javax.swing.GroupLayout(panel_ver_capa);
+        panel_ver_capa.setLayout(panel_ver_capaLayout);
+        panel_ver_capaLayout.setHorizontalGroup(
+            panel_ver_capaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panel_ver_capaLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(panel_ver_capaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panel_ver_capaLayout.createSequentialGroup()
+                        .addComponent(panel_oculto, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btn_busqueda))
-                    .addComponent(label_capa, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panel_ver_capaLayout.createSequentialGroup()
+                        .addComponent(jLabel15, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jcb_viendo, javax.swing.GroupLayout.PREFERRED_SIZE, 716, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(label_img, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
-        jPanel3Layout.setVerticalGroup(
-            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel3Layout.createSequentialGroup()
+        panel_ver_capaLayout.setVerticalGroup(
+            panel_ver_capaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panel_ver_capaLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btn_busqueda)
-                    .addComponent(txt_busqueda, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel2))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(label_capa, javax.swing.GroupLayout.DEFAULT_SIZE, 28, Short.MAX_VALUE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(label_img, javax.swing.GroupLayout.PREFERRED_SIZE, 478, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(panel_ver_capaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jcb_viendo)
+                    .addComponent(jLabel15))
+                .addGroup(panel_ver_capaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(panel_ver_capaLayout.createSequentialGroup()
+                        .addGap(2, 2, 2)
+                        .addComponent(panel_oculto, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(panel_ver_capaLayout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 61, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(34, 34, 34)
+                .addComponent(label_img, javax.swing.GroupLayout.PREFERRED_SIZE, 492, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
-        jTabbedPane1.addTab("Ver capa", jPanel3);
+        jtab_sistema.addTab("Ver capa", panel_ver_capa);
 
-        jPanel4.setBackground(new java.awt.Color(25, 25, 25));
+        panel_generar.setBackground(new java.awt.Color(25, 25, 25));
+
+        panelBotones.setBackground(new java.awt.Color(25, 25, 25));
+
+        label_generada.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        label_generada.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Graficar/layer2.png"))); // NOI18N
 
         javax.swing.GroupLayout panelBotonesLayout = new javax.swing.GroupLayout(panelBotones);
         panelBotones.setLayout(panelBotonesLayout);
         panelBotonesLayout.setHorizontalGroup(
             panelBotonesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
+            .addGroup(panelBotonesLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(label_generada, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
         );
         panelBotonesLayout.setVerticalGroup(
             panelBotonesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 512, Short.MAX_VALUE)
+            .addGroup(panelBotonesLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(label_generada, javax.swing.GroupLayout.DEFAULT_SIZE, 448, Short.MAX_VALUE)
+                .addContainerGap())
         );
+
+        panel_recorrido.setBackground(new java.awt.Color(50, 50, 50));
+
+        jLabel9.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
+        jLabel9.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel9.setText("Ingresa el número de capas a utilizar y el tipo de recorrido que se desea");
+
+        txt_no_capas.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("#"))));
+        txt_no_capas.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+
+        btn_generar_recorrido.setText("GENERAR");
+        btn_generar_recorrido.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_generar_recorridoActionPerformed(evt);
+            }
+        });
+
+        jcb_recorrido.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "inOrden", "preOrden", "postOrden" }));
+
+        jLabel10.setText("Recorrido:");
+
+        jLabel11.setText("Número de capas:");
+
+        label_recorrido.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        label_recorrido.setText("Acá se mostrara el recorrido con el que se generara la imagen");
+
+        javax.swing.GroupLayout panel_recorridoLayout = new javax.swing.GroupLayout(panel_recorrido);
+        panel_recorrido.setLayout(panel_recorridoLayout);
+        panel_recorridoLayout.setHorizontalGroup(
+            panel_recorridoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panel_recorridoLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(panel_recorridoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(label_recorrido, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jLabel9, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 848, Short.MAX_VALUE)
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, panel_recorridoLayout.createSequentialGroup()
+                        .addComponent(jLabel11)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(txt_no_capas)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jLabel10)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jcb_recorrido, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btn_generar_recorrido, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                .addContainerGap())
+        );
+        panel_recorridoLayout.setVerticalGroup(
+            panel_recorridoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panel_recorridoLayout.createSequentialGroup()
+                .addGap(22, 22, 22)
+                .addComponent(jLabel9, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(panel_recorridoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addGroup(panel_recorridoLayout.createSequentialGroup()
+                        .addGap(12, 12, 12)
+                        .addGroup(panel_recorridoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(txt_no_capas)
+                            .addComponent(jLabel11, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jLabel10, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                    .addGroup(panel_recorridoLayout.createSequentialGroup()
+                        .addGap(6, 6, 6)
+                        .addComponent(btn_generar_recorrido, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(panel_recorridoLayout.createSequentialGroup()
+                        .addGap(12, 12, 12)
+                        .addComponent(jcb_recorrido)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(label_recorrido)
+                .addGap(24, 24, 24))
+        );
+
+        jtab_generar.addTab("Recorrido limitado", panel_recorrido);
+
+        panel_lista.setBackground(new java.awt.Color(50, 50, 50));
+
+        jLabel12.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
+        jLabel12.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel12.setText("Ingresa el id de la imagen a generar");
+
+        btn_buscar_img.setText("BUSCAR");
+        btn_buscar_img.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_buscar_imgActionPerformed(evt);
+            }
+        });
+
+        label_orden.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        label_orden.setText("Acá se mostrará el orden de las capas");
+
+        javax.swing.GroupLayout panel_listaLayout = new javax.swing.GroupLayout(panel_lista);
+        panel_lista.setLayout(panel_listaLayout);
+        panel_listaLayout.setHorizontalGroup(
+            panel_listaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panel_listaLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(panel_listaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(label_orden, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jLabel12, javax.swing.GroupLayout.DEFAULT_SIZE, 848, Short.MAX_VALUE)
+                    .addGroup(panel_listaLayout.createSequentialGroup()
+                        .addComponent(txt_id_img)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btn_buscar_img, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                .addContainerGap())
+        );
+        panel_listaLayout.setVerticalGroup(
+            panel_listaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panel_listaLayout.createSequentialGroup()
+                .addGap(32, 32, 32)
+                .addComponent(jLabel12, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(panel_listaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addGroup(panel_listaLayout.createSequentialGroup()
+                        .addGap(8, 8, 8)
+                        .addComponent(txt_id_img))
+                    .addGroup(panel_listaLayout.createSequentialGroup()
+                        .addGap(6, 6, 6)
+                        .addComponent(btn_buscar_img, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(label_orden)
+                .addGap(20, 20, 20))
+        );
+
+        jtab_generar.addTab("Lista de imagenes", panel_lista);
+
+        panel_capa.setBackground(new java.awt.Color(50, 50, 50));
 
         txt_id.setToolTipText("Ingresa el id de la capa que quieras ver");
 
@@ -207,43 +558,301 @@ public class Vista extends javax.swing.JFrame {
             }
         });
 
-        javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
-        jPanel4.setLayout(jPanel4Layout);
-        jPanel4Layout.setHorizontalGroup(
-            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel4Layout.createSequentialGroup()
+        jLabel8.setBackground(new java.awt.Color(25, 25, 25));
+        jLabel8.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
+        jLabel8.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel8.setText("Ingresa el id de la capa");
+
+        javax.swing.GroupLayout panel_capaLayout = new javax.swing.GroupLayout(panel_capa);
+        panel_capa.setLayout(panel_capaLayout);
+        panel_capaLayout.setHorizontalGroup(
+            panel_capaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panel_capaLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(panelBotones, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addGroup(jPanel4Layout.createSequentialGroup()
-                        .addComponent(txt_id, javax.swing.GroupLayout.DEFAULT_SIZE, 707, Short.MAX_VALUE)
+                .addGroup(panel_capaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel8, javax.swing.GroupLayout.DEFAULT_SIZE, 848, Short.MAX_VALUE)
+                    .addGroup(panel_capaLayout.createSequentialGroup()
+                        .addComponent(txt_id)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btn_buscar)))
+                        .addComponent(btn_buscar, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
-        jPanel4Layout.setVerticalGroup(
-            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
+        panel_capaLayout.setVerticalGroup(
+            panel_capaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panel_capaLayout.createSequentialGroup()
+                .addGap(35, 35, 35)
+                .addComponent(jLabel8, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(panel_capaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addGroup(panel_capaLayout.createSequentialGroup()
+                        .addGap(8, 8, 8)
+                        .addComponent(txt_id))
+                    .addGroup(panel_capaLayout.createSequentialGroup()
+                        .addGap(6, 6, 6)
+                        .addComponent(btn_buscar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                .addGap(39, 39, 39))
+        );
+
+        jtab_generar.addTab("Capa", panel_capa);
+
+        panel_usuario.setBackground(new java.awt.Color(50, 50, 50));
+
+        jLabel13.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
+        jLabel13.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel13.setText("Ingresa el nombre del usuario y se te mostrarán las imagenes que el haya creado");
+
+        btn_buscar_usuario.setText("BUSCAR");
+        btn_buscar_usuario.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_buscar_usuarioActionPerformed(evt);
+            }
+        });
+
+        jLabel14.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel14.setText("Imagenes del usuario");
+
+        jcb_lista_img.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Aun no has ingresado un usuario" }));
+
+        btn_generar_usuario.setText("GENERAR");
+        btn_generar_usuario.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_generar_usuarioActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout panel_usuarioLayout = new javax.swing.GroupLayout(panel_usuario);
+        panel_usuario.setLayout(panel_usuarioLayout);
+        panel_usuarioLayout.setHorizontalGroup(
+            panel_usuarioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panel_usuarioLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(txt_id, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btn_buscar))
+                .addGroup(panel_usuarioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel14, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jLabel13, javax.swing.GroupLayout.DEFAULT_SIZE, 848, Short.MAX_VALUE)
+                    .addGroup(panel_usuarioLayout.createSequentialGroup()
+                        .addComponent(txt_usuario)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btn_buscar_usuario))
+                    .addGroup(panel_usuarioLayout.createSequentialGroup()
+                        .addComponent(jcb_lista_img, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btn_generar_usuario, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                .addContainerGap())
+        );
+        panel_usuarioLayout.setVerticalGroup(
+            panel_usuarioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panel_usuarioLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel13, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(panel_usuarioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addGroup(panel_usuarioLayout.createSequentialGroup()
+                        .addGap(8, 8, 8)
+                        .addComponent(txt_usuario))
+                    .addGroup(panel_usuarioLayout.createSequentialGroup()
+                        .addGap(3, 3, 3)
+                        .addComponent(btn_buscar_usuario, javax.swing.GroupLayout.DEFAULT_SIZE, 33, Short.MAX_VALUE)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel14, javax.swing.GroupLayout.DEFAULT_SIZE, 18, Short.MAX_VALUE)
+                .addGap(8, 8, 8)
+                .addGroup(panel_usuarioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jcb_lista_img)
+                    .addComponent(btn_generar_usuario, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
+        );
+
+        jtab_generar.addTab("Usuario", panel_usuario);
+
+        javax.swing.GroupLayout panel_generarLayout = new javax.swing.GroupLayout(panel_generar);
+        panel_generar.setLayout(panel_generarLayout);
+        panel_generarLayout.setHorizontalGroup(
+            panel_generarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panel_generarLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(panel_generarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(panelBotones, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jtab_generar))
+                .addContainerGap())
+        );
+        panel_generarLayout.setVerticalGroup(
+            panel_generarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panel_generarLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jtab_generar, javax.swing.GroupLayout.PREFERRED_SIZE, 157, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(panelBotones, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
-        jTabbedPane1.addTab("Generar imagen", jPanel4);
+        jtab_sistema.addTab("Generar imagen", panel_generar);
+
+        jPanel1.setBackground(new java.awt.Color(25, 25, 25));
+
+        panel_agregar_usuario.setBackground(new java.awt.Color(50, 50, 50));
+
+        jLabel7.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
+        jLabel7.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel7.setText("Agregar nuevo usuario");
+
+        jLabel16.setText("Nombre del usuario:");
+
+        btn_agregar_usuario.setText("AGREGAR");
+        btn_agregar_usuario.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_agregar_usuarioActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout panel_agregar_usuarioLayout = new javax.swing.GroupLayout(panel_agregar_usuario);
+        panel_agregar_usuario.setLayout(panel_agregar_usuarioLayout);
+        panel_agregar_usuarioLayout.setHorizontalGroup(
+            panel_agregar_usuarioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panel_agregar_usuarioLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(panel_agregar_usuarioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(panel_agregar_usuarioLayout.createSequentialGroup()
+                        .addComponent(jLabel16)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(txt_nombre_user)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btn_agregar_usuario)))
+                .addContainerGap())
+        );
+        panel_agregar_usuarioLayout.setVerticalGroup(
+            panel_agregar_usuarioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panel_agregar_usuarioLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel7)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(panel_agregar_usuarioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel16)
+                    .addComponent(txt_nombre_user, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btn_agregar_usuario))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+
+        panel_agregar_img.setBackground(new java.awt.Color(50, 50, 50));
+
+        jLabel17.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
+        jLabel17.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel17.setText("Agregar nueva imagen");
+
+        jLabel18.setText("Usuario:");
+
+        jLabel19.setText("ID de la nueva imagen:");
+
+        table_capas.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "Capa"
+            }
+        ));
+        jScrollPane2.setViewportView(table_capas);
+
+        jLabel20.setText("Capa:");
+
+        btn_agregar_imagen.setText("AGREGAR CAPA A IMAGEN");
+        btn_agregar_imagen.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_agregar_imagenActionPerformed(evt);
+            }
+        });
+
+        jButton3.setText("AGREGAR IMAGEN");
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3ActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout panel_agregar_imgLayout = new javax.swing.GroupLayout(panel_agregar_img);
+        panel_agregar_img.setLayout(panel_agregar_imgLayout);
+        panel_agregar_imgLayout.setHorizontalGroup(
+            panel_agregar_imgLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panel_agregar_imgLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(panel_agregar_imgLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel17, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(panel_agregar_imgLayout.createSequentialGroup()
+                        .addGroup(panel_agregar_imgLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(panel_agregar_imgLayout.createSequentialGroup()
+                                .addComponent(jLabel20)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jcb_capas, 0, 431, Short.MAX_VALUE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(btn_agregar_imagen))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panel_agregar_imgLayout.createSequentialGroup()
+                                .addComponent(jLabel18)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jcb_usuarios, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addGroup(panel_agregar_imgLayout.createSequentialGroup()
+                                .addComponent(jLabel19)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jTextField1))
+                            .addComponent(jButton3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 191, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap())
+        );
+        panel_agregar_imgLayout.setVerticalGroup(
+            panel_agregar_imgLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panel_agregar_imgLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel17)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(panel_agregar_imgLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addGroup(panel_agregar_imgLayout.createSequentialGroup()
+                        .addGroup(panel_agregar_imgLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel18)
+                            .addComponent(jcb_usuarios, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(panel_agregar_imgLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel19)
+                            .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(panel_agregar_imgLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel20)
+                            .addComponent(jcb_capas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btn_agregar_imagen))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jButton3))
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 158, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(panel_agregar_usuario, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(panel_agregar_img, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(panel_agregar_usuario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(panel_agregar_img, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+
+        jtab_sistema.addTab("Agregar", jPanel1);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jTabbedPane1)
+            .addComponent(jtab_sistema)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jTabbedPane1)
+            .addComponent(jtab_sistema)
         );
 
         pack();
@@ -258,7 +867,7 @@ public class Vista extends javax.swing.JFrame {
             File archivo = new File(chooser.getSelectedFile().getAbsolutePath());
             String path = chooser.getSelectedFile().getAbsolutePath();
             String nuevo = path;
-            label_path.setText("Archivo cargado: " + nuevo);
+            label_path.setText("Archivo cap cargado: " + nuevo);
             String ST;
             try {
                 ST = new String(Files.readAllBytes(archivo.toPath()));
@@ -268,8 +877,18 @@ public class Vista extends javax.swing.JFrame {
                     for (int i = 0; i < 10; i++) {
                         System.out.println("   -----------   ");
                     }
-                    obtener.lista_capas.recorrido_inOrden(obtener.lista_capas.getRaiz());
                     estatica = obtener.lista_capas;
+                    if (estatica.getRaiz() != null) {
+                        area_estado.setText("Se ha cargado exitosamente el archivo cap, ahora se habilito el siguiente apartado (el de imagenes),\n ya puedes ver las capas en la pestaña ver capa");
+                        escribir_doc(estatica.escribir_doc());
+                        btn_cargar_img.setEnabled(true);
+                        btn_cargar.setEnabled(false);
+                        actualizar_listado_capas();
+                        escribir_doc(estatica.escribir_doc());
+                    } else {
+                        label_path.setText("No has cargado ningún archivo");
+                        area_estado.setText("El archivo que ingresaste no contenia ninguna capa, intenta ingresando otro archivo");
+                    }
                 } catch (Exception ex) {
                     Logger.getLogger(Vista.class.getName()).log(Level.SEVERE, null, ex);
                 }
@@ -286,33 +905,385 @@ public class Vista extends javax.swing.JFrame {
         int id_buscar = Integer.parseInt(id);
         Capa encontrada = estatica.buscarCapa(id_buscar);
         if (encontrada != null) {
-            generarBotones(encontrada);
+            generarImagen(encontrada);
         } else {
-            System.out.println("no existe");
+            JOptionPane.showMessageDialog(null, "No existe la capa!");
         }
     }//GEN-LAST:event_btn_buscarActionPerformed
 
     private void btn_busquedaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_busquedaActionPerformed
         String id = txt_busqueda.getText();
-        int id_buscar = Integer.parseInt(id);
-        Capa encontrada = estatica.buscarCapa(id_buscar);
-        String path2 = System.getProperty("user.dir");
-
-        String decodedPath = "";
-        try {
-            decodedPath = URLDecoder.decode(path2, "UTF-8");
-        } catch (UnsupportedEncodingException ex) {
-            Logger.getLogger(Vista.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        if (encontrada != null) {
-            String todos = encontrada.getDispersa().escribir_todos();
-            escribir_doc(todos);
-            ImageIcon imageIcon = new ImageIcon(new ImageIcon(decodedPath+"/src/Graficar/grafica.jpg").getImage().getScaledInstance(label_img.getWidth(), label_img.getHeight(),Image.SCALE_SMOOTH));
-            label_img.setIcon(imageIcon);
+        if (!id.isEmpty()) {
+            int id_buscar = Integer.parseInt(id);
+            if (estatica != null) {
+                Capa encontrada = estatica.buscarCapa(id_buscar);
+                String path2 = System.getProperty("user.dir");
+                String decodedPath = "";
+                try {
+                    decodedPath = URLDecoder.decode(path2, "UTF-8");
+                } catch (UnsupportedEncodingException ex) {
+                    Logger.getLogger(Vista.class.getName()).log(Level.SEVERE, null, ex);
+                }
+                if (encontrada != null) {
+                    String todos = encontrada.getDispersa().escribir_todos();
+                    escribir_doc(todos);
+                } else {
+                    label_img.setIcon(new ImageIcon(decodedPath + "/src/Graficar/busqueda.png"));
+                }
+            } else {
+                JOptionPane.showMessageDialog(null, "No has cargado ningun archivo!");
+            }
         } else {
-            System.out.println("no existe");
+            JOptionPane.showMessageDialog(null, "No ingresaste ningun id!");
         }
     }//GEN-LAST:event_btn_busquedaActionPerformed
+
+    private void btn_generar_recorridoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_generar_recorridoActionPerformed
+        String opcion = "";
+        System.out.println(estatica.escribir_doc());
+        if (!txt_no_capas.getText().isEmpty()) {
+            int cuantas = Integer.parseInt(txt_no_capas.getText());
+            switch (jcb_recorrido.getSelectedIndex()) {
+                case 0:
+                    opcion = estatica.recorrido_inOrden(estatica.getRaiz());
+                    break;
+                case 1:
+                    opcion = estatica.recorrido_preOrden(estatica.getRaiz());
+                    break;
+                case 2:
+                    opcion = estatica.recorrido_postOrden(estatica.getRaiz());
+                    break;
+                default:
+                    break;
+            }
+            if (!opcion.isEmpty()) {
+                String[] capas = opcion.split("-");
+                int[] no_capas = new int[capas.length];
+                for (int i = 0; i < capas.length; i++) {
+                    no_capas[i] = Integer.parseInt(capas[i]);
+                }
+                String recorrer = "Recorrido: ";
+                Matriz temporal = estatica.buscarCapa(no_capas[0]).getDispersa().obtener();
+                recorrer += capas[0] + " ";
+                if (cuantas <= capas.length) {
+                    for (int i = 1; i < cuantas; i++) {
+                        temporal.sumar_matriz(estatica.buscarCapa(no_capas[i]).getDispersa().obtener());
+                        recorrer += capas[i] + " ";
+                    }
+                    Capa imp = new Capa();
+                    imp.setDispersa(temporal);
+                    label_recorrido.setText(recorrer);
+                    generarImagen(imp);
+                } else {
+                    label_recorrido.setText("Acá se mostrara el recorrido con el que se generara la imagen");
+                    JOptionPane.showMessageDialog(null, "No hay tantas capas para generar la imagen!");
+                }
+            }
+        }
+    }//GEN-LAST:event_btn_generar_recorridoActionPerformed
+
+    private void btn_cargar_imgActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_cargar_imgActionPerformed
+        JFileChooser chooser = new JFileChooser();
+        FileNameExtensionFilter filtro2 = new FileNameExtensionFilter("Archivo de imagenes", "im");
+        chooser.setFileFilter(filtro2);
+        int resultado = chooser.showOpenDialog(this);
+        if (resultado == 0) {
+            File archivo = new File(chooser.getSelectedFile().getAbsolutePath());
+            String path = chooser.getSelectedFile().getAbsolutePath();
+            String nuevo = path;
+            label_path_img.setText("Archivo im cargado: " + nuevo);
+            String ST;
+            try {
+                ST = new String(Files.readAllBytes(archivo.toPath()));
+                parserImg obtener = new parserImg(new LexerImg(new StringReader(ST)));
+                obtener.setLista_capas(estatica);
+                try {
+                    obtener.parse();
+                    for (int i = 0; i < 10; i++) {
+                        System.out.println("   -----------   ");
+                    }
+                    estatica_img = obtener.lista_img;
+                    if (estatica_img.getRaiz() != null) {
+                        area_estado.setText("Se ha cargado exitosamente el archivo imp, ahora se habilito el siguiente apartado (el de usuarios),\n ya puedes ver las capas en la pestaña ver capa");
+                        btn_cargar_img.setEnabled(false);
+                        btn_cargar_usuarios.setEnabled(true);
+                    } else {
+                        label_path_img.setText("No has cargado ningún archivo");
+                        area_estado.setText("El archivo que ingresaste no contenia ninguna imagen, intenta ingresando otro archivo");
+                    }
+                } catch (Exception ex) {
+                    Logger.getLogger(Vista.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            } catch (IOException ex) {
+                java.util.logging.Logger.getLogger(Vista.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            }
+        } else {
+            label_path_img.setText("No has cargado ningún archivo");
+        }
+    }//GEN-LAST:event_btn_cargar_imgActionPerformed
+
+    private void btn_buscar_imgActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_buscar_imgActionPerformed
+        if (!txt_id_img.getText().isEmpty()) {
+            String texto = txt_id_img.getText();
+            if (verificarNumero(texto)) {
+                Imagen in = estatica_img.obtener_imagen(Integer.parseInt(texto));
+                if (in != null) {
+                    String op = in.obtener_superpuestos();
+                    if (!op.equalsIgnoreCase("SIN")) {
+                        String[] capas = op.split("-");
+                        int[] no_capas = new int[capas.length];
+                        int[] no_capas2 = new int[no_capas.length];
+                        for (int i = 0; i < capas.length; i++) {
+                            no_capas[i] = Integer.parseInt(capas[i]);
+                        }
+                        int conteo = 0;
+                        for (int i = (no_capas.length - 1); i >= 0; i--) {
+                            no_capas2[conteo] = no_capas[i];
+                            conteo++;
+                        }
+
+                        String recorrer = "Recorrido de superposicion: ";
+                        Matriz temporal = estatica.buscarCapa(no_capas2[0]).getDispersa().obtener();
+                        recorrer += no_capas2[0] + " ";
+                        for (int i = 1; i < capas.length; i++) {
+                            temporal.sumar_matriz(estatica.buscarCapa(no_capas2[i]).getDispersa().obtener());
+                            recorrer += no_capas2[i] + " ";
+                        }
+                        Capa imp = new Capa();
+                        imp.setDispersa(temporal);
+                        label_orden.setText(recorrer);
+                        generarImagen(imp);
+                    } else {
+                        Matriz temporal = new Matriz();
+                        temporal.agregarNodo("#000000", 0, 0);
+                        Capa imp = new Capa();
+                        imp.setDispersa(temporal);
+                        label_orden.setText("No contiene capas");
+                        generarImagen(imp);
+                    }
+                } else {
+                    JOptionPane.showMessageDialog(null, "No existe la imagen que tratas de generar!");
+                }
+            } else {
+                JOptionPane.showMessageDialog(null, "Tienes que ingresar un numero!");
+            }
+        } else {
+            JOptionPane.showMessageDialog(null, "Ingresa un numero primero!");
+        }
+    }//GEN-LAST:event_btn_buscar_imgActionPerformed
+
+    private void jtab_sistemaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jtab_sistemaMouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jtab_sistemaMouseClicked
+
+    private void jcb_viendoItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_jcb_viendoItemStateChanged
+        if (jcb_viendo.getSelectedIndex() == 0) {
+            escribir_doc(estatica.escribir_doc());
+            panel_oculto.setVisible(false);
+            escribir_doc(estatica.escribir_doc());
+        } else if (jcb_viendo.getSelectedIndex() == 1) {
+            panel_oculto.setVisible(true);
+            panel_oculto.updateUI();
+        } else if (jcb_viendo.getSelectedIndex() == 2) {
+            escribir_doc(arbol.escribir_doc());
+            panel_oculto.setVisible(false);
+            escribir_doc(arbol.escribir_doc());
+        } else {
+            escribir_doc(estatica_img.escribir_doc());
+            panel_oculto.setVisible(false);
+            escribir_doc(estatica_img.escribir_doc());
+        }
+    }//GEN-LAST:event_jcb_viendoItemStateChanged
+
+    private void btn_cargar_usuariosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_cargar_usuariosActionPerformed
+        JFileChooser chooser = new JFileChooser();
+        FileNameExtensionFilter filtro2 = new FileNameExtensionFilter("Archivo de usuarios", "usr");
+        chooser.setFileFilter(filtro2);
+        int resultado = chooser.showOpenDialog(this);
+        if (resultado == 0) {
+            File archivo = new File(chooser.getSelectedFile().getAbsolutePath());
+            String path = chooser.getSelectedFile().getAbsolutePath();
+            String nuevo = path;
+            label_path_usr.setText("Archivo usr cargado: " + nuevo);
+            String ST;
+            try {
+                ST = new String(Files.readAllBytes(archivo.toPath()));
+                parser obtener = new parser(new Lexer(new StringReader(ST)));
+                obtener.setLista_imgs(estatica_img);
+                try {
+                    obtener.parse();
+                    for (int i = 0; i < 10; i++) {
+                        System.out.println("   -----------   ");
+                    }
+                    arbol = obtener.arbol_usr;
+                    if (arbol.getRaiz() != null) {
+                        area_estado.setText("Se ha cargado exitosamente el archivo usr, ahora se puedes utilizar correctamente el sistema");
+                        btn_cargar_usuarios.setEnabled(false);
+                        actualizar_listado_usuarios();
+                    } else {
+                        label_path_usr.setText("No has cargado ningún archivo");
+                        area_estado.setText("El archivo que ingresaste no contenia ninguna imagen, intenta ingresando otro archivo");
+                    }
+                } catch (Exception ex) {
+                    Logger.getLogger(Vista.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            } catch (IOException ex) {
+                java.util.logging.Logger.getLogger(Vista.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            }
+        } else {
+            label_path_usr.setText("No has cargado ningún archivo");
+        }
+    }//GEN-LAST:event_btn_cargar_usuariosActionPerformed
+
+    private void jcb_viendoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jcb_viendoActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jcb_viendoActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        if (jcb_viendo.getSelectedIndex() == 0) {
+            escribir_doc(estatica.escribir_doc());
+            panel_oculto.setVisible(false);
+            escribir_doc(estatica.escribir_doc());
+        } else if (jcb_viendo.getSelectedIndex() == 1) {
+            panel_oculto.setVisible(true);
+            panel_oculto.updateUI();
+        } else if (jcb_viendo.getSelectedIndex() == 2) {
+            escribir_doc(arbol.escribir_doc());
+            panel_oculto.setVisible(false);
+            escribir_doc(arbol.escribir_doc());
+        } else {
+            escribir_doc(estatica_img.escribir_doc());
+            panel_oculto.setVisible(false);
+            escribir_doc(estatica_img.escribir_doc());
+        }
+    }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void btn_buscar_usuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_buscar_usuarioActionPerformed
+        String usuario = txt_usuario.getText();
+        if (!usuario.isEmpty()) {
+            arbol.recorrerHasta(arbol.getRaiz(), usuario);
+            int enco = arbol.encontraste;
+            if (enco != -1) {
+                NodoUsuario us = arbol.buscar(enco, arbol.getRaiz());
+                if (us != null) {
+                    UsuarioImagen partida = us.getInicio();
+                    if (partida != null) {
+                        jcb_lista_img.removeAllItems();
+                        while (partida != null) {
+                            jcb_lista_img.addItem(partida.getId() + "");
+                            partida = partida.getSiguiente();
+                        }
+                    } else {
+                        JOptionPane.showMessageDialog(null, "No ha creado imagenes!");
+                        jcb_lista_img.removeAllItems();
+                        jcb_lista_img.addItem("No tiene imagenes el usuario");
+                    }
+                } else {
+                    JOptionPane.showMessageDialog(null, "El usuario que ingresaste no existe!");
+                }
+            } else {
+                JOptionPane.showMessageDialog(null, "El usuario que ingresaste no existe!");
+            }
+        } else {
+            JOptionPane.showMessageDialog(null, "Ingresa un usuario primero!");
+        }
+    }//GEN-LAST:event_btn_buscar_usuarioActionPerformed
+
+    private void btn_generar_usuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_generar_usuarioActionPerformed
+        if (!jcb_lista_img.getSelectedItem().toString().isEmpty()) {
+            String texto = jcb_lista_img.getSelectedItem().toString();
+            if (verificarNumero(texto)) {
+                Imagen in = estatica_img.obtener_imagen(Integer.parseInt(texto));
+                if (in != null) {
+                    String op = in.obtener_superpuestos();
+                    if (!op.equalsIgnoreCase("SIN")) {
+                        String[] capas = op.split("-");
+                        int[] no_capas = new int[capas.length];
+                        int[] no_capas2 = new int[no_capas.length];
+                        for (int i = 0; i < capas.length; i++) {
+                            no_capas[i] = Integer.parseInt(capas[i]);
+                        }
+                        int conteo = 0;
+                        for (int i = (no_capas.length - 1); i >= 0; i--) {
+                            no_capas2[conteo] = no_capas[i];
+                            conteo++;
+                        }
+
+                        String recorrer = "Recorrido de superposicion: ";
+                        Matriz temporal = estatica.buscarCapa(no_capas2[0]).getDispersa().obtener();
+                        recorrer += no_capas2[0] + " ";
+                        for (int i = 1; i < capas.length; i++) {
+                            temporal.sumar_matriz(estatica.buscarCapa(no_capas2[i]).getDispersa().obtener());
+                            recorrer += no_capas2[i] + " ";
+                        }
+                        Capa imp = new Capa();
+                        imp.setDispersa(temporal);
+                        label_orden.setText(recorrer);
+                        generarImagen(imp);
+                    } else {
+                        Matriz temporal = new Matriz();
+                        temporal.agregarNodo("#000000", 0, 0);
+                        Capa imp = new Capa();
+                        imp.setDispersa(temporal);
+                        label_orden.setText("No contiene capas");
+                        generarImagen(imp);
+                    }
+                } else {
+                    JOptionPane.showMessageDialog(null, "No existe la imagen que tratas de generar!");
+                }
+            } else {
+                JOptionPane.showMessageDialog(null, "El usuario que ingresaste no ha creado imagenes!");
+            }
+        } else {
+            JOptionPane.showMessageDialog(null, "No hay nada en el apartado de imagenes!");
+        }
+    }//GEN-LAST:event_btn_generar_usuarioActionPerformed
+
+    private void btn_agregar_usuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_agregar_usuarioActionPerformed
+        if (!txt_nombre_user.getText().isEmpty()) {
+            String user = txt_nombre_user.getText();
+            arbol.recorrerHasta(arbol.getRaiz(), user);
+            int en = arbol.encontraste;
+            if (en == -1) {
+                NodoUsuario aIn = new NodoUsuario();
+                aIn.setNombreUsuario(user);
+                arbol.insertar(aIn);
+                actualizar_listado_usuarios();
+                JOptionPane.showMessageDialog(null, "Usuario ingresado correctamente");
+            } else {
+                JOptionPane.showMessageDialog(null, "El usuario ya existe");
+            }
+        } else {
+            JOptionPane.showMessageDialog(null, "Ingresa primero un nombre de usuario");
+        }
+    }//GEN-LAST:event_btn_agregar_usuarioActionPerformed
+
+    private void btn_agregar_imagenActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_agregar_imagenActionPerformed
+        String valor = jcb_capas.getSelectedItem().toString();
+        int cantidad = table_capas.getRowCount();
+        boolean existe = false;
+        for (int i = 0; i < cantidad; i++) {
+            if (table_capas.getValueAt(i, 0).toString().equalsIgnoreCase(valor)) {
+                existe = true;
+                break;
+            }
+        }
+        if (!existe) {
+            DefaultTableModel tb = (DefaultTableModel) table_capas.getModel();
+            Object[] ob = {valor};
+            tb.addRow(ob);
+        } else {
+            JOptionPane.showMessageDialog(null, "Ya ingresaste una vez la capa");
+        }
+    }//GEN-LAST:event_btn_agregar_imagenActionPerformed
+
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+        DefaultTableModel tb = (DefaultTableModel) table_capas.getModel();
+        int a = table_capas.getRowCount() - 1;
+        for (int i = a; i >= 0; i--) {
+            tb.removeRow(tb.getRowCount() - 1);
+        }
+    }//GEN-LAST:event_jButton3ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -380,6 +1351,9 @@ public class Vista extends javax.swing.JFrame {
     }
 
     public void generarBotones(Capa c) {
+        String generacion = "digraph html {\n"
+                + "	abc [shape=none,margin=0, label=<\n"
+                + "<TABLE BORDER=\"0\" CELLBORDER=\"1\" CELLSPACING=\"0\" CELLPADDING=\"4\">";
         panelBotones.removeAll();
         Matriz m = c.getDispersa();
         m.escribir_todos();
@@ -397,21 +1371,141 @@ public class Vista extends javax.swing.JFrame {
                 String color = m.obtener_color(i - 1, j - 1);
                 if (!color.equalsIgnoreCase("null")) {
                     temp.setBackground(awtColor(web(color)));
+                } else {
+                    temp.setBackground(Color.WHITE);
                 }
                 if (i == 0 && j == 0) {
                     temp.setText("MATRIZ");
-                    temp.setContentAreaFilled(false);
+                    temp.setBackground(Color.BLACK);
+                    temp.setForeground(Color.YELLOW);
                 } else {
                     if (i == 0 && j > 0) {
                         temp.setText((j - 1) + "");
-                        temp.setContentAreaFilled(false);
+                        temp.setBackground(Color.BLACK);
+                        temp.setForeground(Color.YELLOW);
                     }
                     if (j == 0 && i > 0) {
                         temp.setText((i - 1) + "");
-                        temp.setContentAreaFilled(false);
+                        temp.setBackground(Color.BLACK);
+                        temp.setForeground(Color.YELLOW);
                     }
                 }
                 panelBotones.add(temp);
+            }
+        }
+        for (int i = 0; i <= y; i++) {
+            generacion += "<TR>\n";
+            for (int j = 0; j <= x; j++) {
+                String color = m.obtener_color(j, i);
+                if (!color.equalsIgnoreCase("null")) {
+                    generacion += "<TD BGCOLOR=\"" + color + "\"><FONT COLOR=\"" + color + "\">..</FONT></TD>\n";
+                } else {
+                    generacion += "<TD BGCOLOR=\"white\"><FONT COLOR=\"white\">..</FONT></TD>\n";
+                }
+            }
+            generacion += "</TR>\n";
+        }
+        generacion += "</TABLE>>\n]}";
+        System.out.println(generacion);
+        panelBotones.updateUI();
+    }
+
+    public boolean verificarNumero(String dato) {
+        return dato.matches("[+-]?\\d*(\\.\\d+)?");
+    }
+
+    public void actualizar_listado_usuarios() {
+        String[] partir = arbol.obtener_todos_usuarios(arbol.getRaiz()).split("-");
+        if (partir.length > 0) {
+            jcb_usuarios.removeAllItems();
+            for (int i = 0; i < partir.length; i++) {
+                jcb_usuarios.addItem(partir[i]);
+            }
+        }
+    }
+
+    public void actualizar_listado_capas() {
+        String[] partir = estatica.recorrido_inOrden(estatica.getRaiz()).split("-");
+        if (partir.length > 0) {
+            jcb_capas.removeAllItems();
+            for (int i = 0; i < partir.length; i++) {
+                jcb_capas.addItem(partir[i]);
+            }
+        }
+    }
+
+    public void generarImagen(Capa c) {
+        String generacion = "digraph html {\n"
+                + "	abc [shape=none,margin=0, label=<\n"
+                + "<TABLE BORDER=\"0\" CELLBORDER=\"1\" CELLSPACING=\"0\" CELLPADDING=\"4\">";
+        Matriz m = c.getDispersa();
+        m.escribir_todos();
+        int y = m.getNoFil();
+        int x = m.getNoCol();
+        int sy = m.getMenorFil();
+        int sx = m.getMenorCol();
+        for (int i = sy; i <= y; i++) {
+            generacion += "<TR>\n";
+            for (int j = sx; j <= x; j++) {
+                String color = m.obtener_color(j, i);
+                if (!color.equalsIgnoreCase("null")) {
+                    generacion += "<TD BGCOLOR=\"" + color + "\"><FONT COLOR=\"" + color + "\">..</FONT></TD>\n";
+                } else {
+                    generacion += "<TD BGCOLOR=\"white\"><FONT COLOR=\"white\">..</FONT></TD>\n";
+                }
+            }
+            generacion += "</TR>\n";
+        }
+        generacion += "</TABLE>>\n]}";
+
+        String path2 = System.getProperty("user.dir");
+        String decodedPath = "";
+        try {
+            decodedPath = URLDecoder.decode(path2, "UTF-8");
+        } catch (UnsupportedEncodingException ex) {
+            Logger.getLogger(Vista.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        try (FileWriter fw = new FileWriter(decodedPath + "/src/Graficar/imagen.txt", false);
+                BufferedWriter bw = new BufferedWriter(fw);
+                PrintWriter out = new PrintWriter(bw)) {
+            out.println(generacion);
+            out.close();
+        } catch (IOException e) {
+            //exception handling left as an exercise for the reader
+        } finally {
+            try {
+                decodedPath = URLDecoder.decode(path2, "UTF-8");
+            } catch (UnsupportedEncodingException ex) {
+                Logger.getLogger(Vista.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            try {
+
+                String dotPath = "dot";
+
+                String fileInputPath = decodedPath + "/src/Graficar/imagen.txt";
+                String fileOutputPath = decodedPath + "/src/Graficar/imagen.png";
+
+                String tParam = "-Tpng";
+                String tOParam = "-o";
+
+                String[] cmd = new String[5];
+                cmd[0] = dotPath;
+                cmd[1] = tParam;
+                cmd[2] = fileInputPath;
+                cmd[3] = tOParam;
+                cmd[4] = fileOutputPath;
+
+                Runtime rt = Runtime.getRuntime();
+
+                rt.exec(cmd);
+
+            } catch (Exception ex) {
+                ex.printStackTrace();
+            } finally {
+                ImageIcon imageIcon = new ImageIcon(new ImageIcon(decodedPath + "/src/Graficar/imagen.png").getImage().getScaledInstance(label_generada.getWidth(), label_generada.getHeight(), Image.SCALE_SMOOTH));
+                label_generada.setIcon(imageIcon);
+                label_generada.updateUI();
+                panelBotones.updateUI();
             }
         }
         panelBotones.updateUI();
@@ -440,8 +1534,9 @@ public class Vista extends javax.swing.JFrame {
             out.println(texto);
         } catch (IOException e) {
             //exception handling left as an exercise for the reader
+        } finally {
+            generar_grafica();
         }
-        generar_grafica();
     }
 
     public void generar_grafica() {
@@ -457,8 +1552,8 @@ public class Vista extends javax.swing.JFrame {
 
             String dotPath = "dot";
 
-            String fileInputPath = decodedPath+"/src/Graficar/grafica.txt";
-            String fileOutputPath = decodedPath+"/src/Graficar/grafica.jpg";
+            String fileInputPath = decodedPath + "/src/Graficar/grafica.txt";
+            String fileOutputPath = decodedPath + "/src/Graficar/grafica.jpg";
 
             String tParam = "-Tjpg";
             String tOParam = "-o";
@@ -477,24 +1572,82 @@ public class Vista extends javax.swing.JFrame {
         } catch (Exception ex) {
             ex.printStackTrace();
         } finally {
+            ImageIcon imageIcon = new ImageIcon(new ImageIcon(decodedPath + "/src/Graficar/grafica.jpg").getImage().getScaledInstance(label_img.getWidth(), label_img.getHeight(), Image.SCALE_SMOOTH));
+            label_img.setIcon(imageIcon);
         }
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JTextArea area_estado;
+    private javax.swing.JButton btn_agregar_imagen;
+    private javax.swing.JButton btn_agregar_usuario;
     private javax.swing.JButton btn_buscar;
+    private javax.swing.JButton btn_buscar_img;
+    private javax.swing.JButton btn_buscar_usuario;
     private javax.swing.JButton btn_busqueda;
     private javax.swing.JButton btn_cargar;
+    private javax.swing.JButton btn_cargar_img;
+    private javax.swing.JButton btn_cargar_usuarios;
+    private javax.swing.JButton btn_generar_recorrido;
+    private javax.swing.JButton btn_generar_usuario;
+    private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton3;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel10;
+    private javax.swing.JLabel jLabel11;
+    private javax.swing.JLabel jLabel12;
+    private javax.swing.JLabel jLabel13;
+    private javax.swing.JLabel jLabel14;
+    private javax.swing.JLabel jLabel15;
+    private javax.swing.JLabel jLabel16;
+    private javax.swing.JLabel jLabel17;
+    private javax.swing.JLabel jLabel18;
+    private javax.swing.JLabel jLabel19;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel20;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
+    private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
-    private javax.swing.JPanel jPanel3;
-    private javax.swing.JPanel jPanel4;
-    private javax.swing.JTabbedPane jTabbedPane1;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JTextField jTextField1;
+    private javax.swing.JComboBox<String> jcb_capas;
+    private javax.swing.JComboBox<String> jcb_lista_img;
+    private javax.swing.JComboBox<String> jcb_recorrido;
+    private javax.swing.JComboBox<String> jcb_usuarios;
+    private javax.swing.JComboBox<String> jcb_viendo;
+    private javax.swing.JTabbedPane jtab_generar;
+    private javax.swing.JTabbedPane jtab_sistema;
     private javax.swing.JLabel label_capa;
+    private javax.swing.JLabel label_generada;
     private javax.swing.JLabel label_img;
+    private javax.swing.JLabel label_orden;
     private javax.swing.JLabel label_path;
+    private javax.swing.JLabel label_path_img;
+    private javax.swing.JLabel label_path_usr;
+    private javax.swing.JLabel label_recorrido;
     private javax.swing.JPanel panelBotones;
+    private javax.swing.JPanel panel_agregar_img;
+    private javax.swing.JPanel panel_agregar_usuario;
+    private javax.swing.JPanel panel_capa;
+    private javax.swing.JPanel panel_carga;
+    private javax.swing.JPanel panel_generar;
+    private javax.swing.JPanel panel_lista;
+    private javax.swing.JPanel panel_oculto;
+    private javax.swing.JPanel panel_recorrido;
+    private javax.swing.JPanel panel_usuario;
+    private javax.swing.JPanel panel_ver_capa;
+    private javax.swing.JTable table_capas;
     private javax.swing.JTextField txt_busqueda;
     private javax.swing.JTextField txt_id;
+    private javax.swing.JTextField txt_id_img;
+    private javax.swing.JFormattedTextField txt_no_capas;
+    private javax.swing.JTextField txt_nombre_user;
+    private javax.swing.JTextField txt_usuario;
     // End of variables declaration//GEN-END:variables
 }

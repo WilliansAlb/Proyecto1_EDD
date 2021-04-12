@@ -11,6 +11,8 @@ package proyecto1_edd;
  */
 public class ListaCapas {
     private Capa raiz;
+    public String inicioGraph = "digraph G{\n"
+            + "node [shape = record,height=.1];";
 
     public ListaCapas() {
         raiz = null;
@@ -57,33 +59,53 @@ public class ListaCapas {
         return retorno;
     }
     
-    public void recorrido_inOrden(Capa recorrida){
+    public String recorrido_inOrden(Capa recorrida){
+        String retorno = "";
         if (recorrida!=null){
-            recorrido_inOrden(recorrida.getIzquierda());
-            System.out.println(recorrida.getId());
-            recorrida.getDispersa().printShort();
-            String c = recorrida.getDispersa().obtener_color(10, 11);
-            System.out.println(c);
-            recorrido_inOrden(recorrida.getDerecha());
+            retorno += recorrido_inOrden(recorrida.getIzquierda());
+            retorno += recorrida.getId();
+            retorno += "-"; 
+            retorno += recorrido_inOrden(recorrida.getDerecha());
         }
+        return retorno;
     }
     
-    public void recorrido_preOrden(Capa recorrida){
+    public String recorrido(Capa recorrida){
+        String retorno = "";
         if (recorrida!=null){
-            System.out.println(recorrida.getId());
-            recorrida.getDispersa().printShort();
-            recorrido_inOrden(recorrida.getIzquierda());
-            recorrido_inOrden(recorrida.getDerecha());
+            retorno += recorrido(recorrida.getIzquierda());
+            retorno += "node"+recorrida.getId()+"[label = \"<f0> |<f1> "+recorrida.getId()+"|<f2> \"];\n";
+            if (recorrida.getIzquierda()!=null){
+                retorno+= "\"node"+recorrida.getId()+"\":f0 -> \"node"+recorrida.getIzquierda().getId()+"\":f1;\n";
+            }
+            if (recorrida.getDerecha()!=null){
+                retorno+= "\"node"+recorrida.getId()+"\":f2 -> \"node"+recorrida.getDerecha().getId()+"\":f1;\n";
+            }
+            retorno += recorrido(recorrida.getDerecha());
         }
+        return retorno;
     }
     
-    public void recorrido_postOrden(Capa recorrida){
+    public String recorrido_preOrden(Capa recorrida){
+        String retorno = "";
         if (recorrida!=null){
-            recorrido_inOrden(recorrida.getIzquierda());
-            recorrido_inOrden(recorrida.getDerecha());
-            System.out.println(recorrida.getId());
-            recorrida.getDispersa().printShort();
+            retorno += recorrida.getId();
+            retorno += "-"; 
+            retorno += recorrido_preOrden(recorrida.getIzquierda());
+            retorno += recorrido_preOrden(recorrida.getDerecha());
         }
+        return retorno;
+    }
+    
+    public String recorrido_postOrden(Capa recorrida){
+        String retorno = "";
+        if (recorrida!=null){
+            retorno += recorrido_postOrden(recorrida.getIzquierda());
+            retorno += recorrido_postOrden(recorrida.getDerecha());
+            retorno += recorrida.getId();
+            retorno += "-"; 
+        }
+        return retorno;
     }
     
     public Capa getRaiz() {
@@ -94,5 +116,10 @@ public class ListaCapas {
         this.raiz = raiz;
     }
     
-    
+    public String escribir_doc(){
+        String doc = inicioGraph;
+        doc+= recorrido(raiz);
+        doc+="}";
+        return doc;
+    }
 }

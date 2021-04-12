@@ -15,6 +15,8 @@ public class Matriz {
 
     private int noCol;
     private int noFil;
+    private int menorCol;
+    private int menorFil;
     private boolean vacia;
     private Nodo inicio;
     public String inicioGraph = "digraph G{\n"
@@ -31,6 +33,8 @@ public class Matriz {
         this.vacia = true;
         this.noCol = 0;
         this.noFil = 0;
+        this.menorCol = 300;
+        this.menorFil = 300;
         Nodo ne = new Nodo();
         ne.setY(-1);
         ne.setX(-1);
@@ -233,6 +237,12 @@ public class Matriz {
         if (noFil < fila) {
             noFil = fila;
         }
+        if (menorCol > columna) {
+            menorCol = columna;
+        }
+        if (menorFil > fila) {
+            menorFil = fila;
+        }
         if (vacia) {
             Nodo encabezado_columna = new Nodo(columna, -1, "", nuevo, null, null, inicio);
             Nodo encabezado_fila = new Nodo(-1, fila, "", null, inicio, nuevo, null);
@@ -300,6 +310,9 @@ public class Matriz {
                                         nuevo.setSigCol(temp_columna);
                                         nuevo.setAntCol(temp_columna.getAntCol());
                                         temp_columna.setAntCol(nuevo);
+                                        break;
+                                    } else if (temp_columna.getX() == columna){
+                                        temp_columna.setColor(color);
                                         break;
                                     }
                                 } else {
@@ -396,6 +409,9 @@ public class Matriz {
                                         nuevo.setSigFil(temp_fila);
                                         temp_fila.getAntFil().setSigFil(nuevo);
                                         temp_fila.setAntFil(nuevo);
+                                        break;
+                                    } else if (temp_fila.getY() == fila){
+                                        temp_fila.setColor(color);
                                         break;
                                     }
                                 } else {
@@ -628,5 +644,48 @@ public class Matriz {
     public void setNoFil(int noFil) {
         this.noFil = noFil;
     }
+    
+    public Matriz obtener(){
+        Matriz retorno = new Matriz();
+        Nodo nueva_matriz = inicio;
+        while(nueva_matriz.getSigFil()!=null){
+            nueva_matriz = nueva_matriz.getSigFil();
+            Nodo columna = nueva_matriz;
+            while (columna.getSigCol()!=null){
+                columna = columna.getSigCol();
+                retorno.agregarNodo(columna.getColor(),columna.getX(),columna.getY());
+            }
+        }
+        return retorno;
+    }
+    
+    public void sumar_matriz(Matriz m){
+        Nodo nueva_matriz = m.inicio;
+        while(nueva_matriz.getSigFil()!=null){
+            nueva_matriz = nueva_matriz.getSigFil();
+            Nodo columna = nueva_matriz;
+            while (columna.getSigCol()!=null){
+                columna = columna.getSigCol();
+                agregarNodo(columna.getColor(),columna.getX(),columna.getY());
+            }
+        }
+    }
 
+    public int getMenorCol() {
+        return menorCol;
+    }
+
+    public void setMenorCol(int menorCol) {
+        this.menorCol = menorCol;
+    }
+
+    public int getMenorFil() {
+        return menorFil;
+    }
+
+    public void setMenorFil(int menorFil) {
+        this.menorFil = menorFil;
+    }
+
+    
 }

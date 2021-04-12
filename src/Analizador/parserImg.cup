@@ -1,0 +1,90 @@
+package Analizador;
+
+import java_cup.runtime.Symbol;
+import java.util.ArrayList;
+import java.util.Map;
+import java.util.HashMap;
+import proyecto1_edd.*;
+
+parser code
+{:
+    private Symbol sym;
+    
+    public Symbol getS(){
+        return this.sym;
+    }
+
+    public ListaImagenes lista_img = new ListaImagenes();
+    private ListaCapas lista_capas = new ListaCapas();
+    public Capa temp_capa = new Capa();
+    public Imagen temp_img = new Imagen();
+    public Matriz dispersa = new Matriz();
+
+    public void imp(String texto){
+        System.out.println(texto);
+    }
+    
+    public void setLista_capas(ListaCapas lista_capas){
+        this.lista_capas = lista_capas;
+    }
+
+    public void agregando_imagen(String imagen){
+        temp_img.setId(Integer.parseInt(imagen));
+        lista_img.agregar_imagen(temp_img);
+        temp_img = new Imagen();
+    }
+
+    public void agregando_capa_imagen(String capa){
+        int num_capa = Integer.parseInt(capa);
+        Capa obtenida = lista_capas.buscarCapa(num_capa);
+        if (obtenida!=null){
+            NodoImagen ing = new NodoImagen(num_capa,obtenida);
+            temp_img.agregar_nodo(ing);
+            imp("existe y fue agregada");
+        }
+    }
+
+    public void report_fatal_error(String message, Object info) {
+        System.out.println("reportfatal "+message+info);
+    }
+    public void report_fatal_error(Symbol cur) {
+        System.out.println("unrecovered_syntax_error");
+    }
+
+    protected int error_sync_size() {
+        return 1;
+    }
+
+:};
+
+terminal NUMERO,COMA,LLAVEA,LLAVEC;
+non terminal imagenes, bloque_imagenes,lista2, imagenesP, imagen, bloque_imagenesP;
+
+
+start with imagenes;
+
+imagenes::=
+    imagen imagenesP
+;
+
+imagenesP::=
+    | imagenes
+;
+
+imagen::=
+    NUMERO:i1 LLAVEA lista2 LLAVEC {: agregando_imagen(i1.toString());:}
+;
+
+lista2::=
+    | bloque_imagenes
+;
+
+bloque_imagenes::=
+    NUMERO:c1 bloque_imagenesP {: agregando_capa_imagen(c1.toString());:}
+;
+
+bloque_imagenesP::=
+    | COMA bloque_imagenes
+;
+
+

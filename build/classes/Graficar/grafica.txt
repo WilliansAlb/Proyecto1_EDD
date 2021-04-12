@@ -1,82 +1,9 @@
 digraph G{
-rankdir=TB; graph [fontsize=10 fontname="Verdana"];
-node [shape=box fontsize=10 fontname="Verdana"];
-nodeMatriz[label = "MATRIZ"];
-nodeC0[label = "0"];
-nodeC1[label = "1"];
-nodeC2[label = "2"];
-nodeC3[label = "3"];
-nodeC4[label = "4"];
-nodeC5[label = "5"];
-nodeC10[label = "10"];
-nodeF0[label = "0"];
-node2_0[label = "#AAA"];
-node5_0[label = "#BBB"];
-nodeF1[label = "1"];
-node0_1[label = "#FFF"];
-node1_1[label = "#FFF"];
-node3_1[label = "#FFF"];
-node4_1[label = "#FFF"];
-nodeF2[label = "2"];
-node0_2[label = "#FFF"];
-node1_2[label = "#FFF"];
-node2_2[label = "#FFF"];
-node3_2[label = "#FFF"];
-node4_2[label = "#FFF"];
-nodeF3[label = "3"];
-node0_3[label = "#FFF"];
-node1_3[label = "#FFF"];
-node2_3[label = "#FFF"];
-node3_3[label = "#FFF"];
-node4_3[label = "#FFF"];
-nodeF4[label = "4"];
-node0_4[label = "#FFF"];
-node1_4[label = "#FFF"];
-node2_4[label = "#FFF"];
-nodeF5[label = "5"];
-node0_5[label = "#FFF"];
-node10_5[label = "#123"];
-nodeF10[label = "10"];
-node1_10[label = "#231"];
-node10_10[label = "#CCC"];
-nodeMatriz -> nodeC0 -> nodeC1 -> nodeC2 -> nodeC3 -> nodeC4 -> nodeC5 -> nodeC10;
-nodeC10->nodeC5->nodeC4->nodeC3->nodeC2->nodeC1->nodeC0;
-{rank = same; nodeMatriz; nodeC0; nodeC1; nodeC2; nodeC3; nodeC4; nodeC5; nodeC10;}
-nodeF0 -> node2_0 -> node5_0;
-node5_0->node2_0->nodeF0;
-{rank = same; nodeF0; node2_0; node5_0;}
-nodeF1 -> node0_1 -> node1_1 -> node3_1 -> node4_1;
-node4_1->node3_1->node1_1->node0_1->nodeF1;
-{rank = same; nodeF1; node0_1; node1_1; node3_1; node4_1;}
-nodeF2 -> node0_2 -> node1_2 -> node2_2 -> node3_2 -> node4_2;
-node4_2->node3_2->node2_2->node1_2->node0_2->nodeF2;
-{rank = same; nodeF2; node0_2; node1_2; node2_2; node3_2; node4_2;}
-nodeF3 -> node0_3 -> node1_3 -> node2_3 -> node3_3 -> node4_3;
-node4_3->node3_3->node2_3->node1_3->node0_3->nodeF3;
-{rank = same; nodeF3; node0_3; node1_3; node2_3; node3_3; node4_3;}
-nodeF4 -> node0_4 -> node1_4 -> node2_4;
-node2_4->node1_4->node0_4->nodeF4;
-{rank = same; nodeF4; node0_4; node1_4; node2_4;}
-nodeF5 -> node0_5 -> node10_5;
-node10_5->node0_5->nodeF5;
-{rank = same; nodeF5; node0_5; node10_5;}
-nodeF10 -> node1_10 -> node10_10;
-node10_10->node1_10->nodeF10;
-{rank = same; nodeF10; node1_10; node10_10;}
-nodeMatriz -> nodeF0 -> nodeF1 -> nodeF2 -> nodeF3 -> nodeF4 -> nodeF5 -> nodeF10;
-nodeF10->nodeF5->nodeF4->nodeF3->nodeF2->nodeF1->nodeF0;
-nodeC0 -> node0_1 -> node0_2 -> node0_3 -> node0_4 -> node0_5;
-node0_5->node0_4->node0_3->node0_2->node0_1->nodeC0;
-nodeC1 -> node1_1 -> node1_2 -> node1_3 -> node1_4 -> node1_10;
-node1_10->node1_4->node1_3->node1_2->node1_1->nodeC1;
-nodeC2 -> node2_0 -> node2_2 -> node2_3 -> node2_4;
-node2_4->node2_3->node2_2->node2_0->nodeC2;
-nodeC3 -> node3_1 -> node3_2 -> node3_3;
-node3_3->node3_2->node3_1->nodeC3;
-nodeC4 -> node4_1 -> node4_2 -> node4_3;
-node4_3->node4_2->node4_1->nodeC4;
-nodeC5 -> node5_0;
-node5_0->nodeC5;
-nodeC10 -> node10_5 -> node10_10;
-node10_10->node10_5->nodeC10;
+node [shape = record,height=.1];node2[label = "<f0> |<f1> 2|<f2> "];
+node3[label = "<f0> |<f1> 3|<f2> "];
+"node3":f0 -> "node2":f1;
+"node3":f2 -> "node5":f1;
+node4[label = "<f0> |<f1> 4|<f2> "];
+node5[label = "<f0> |<f1> 5|<f2> "];
+"node5":f0 -> "node4":f1;
 }

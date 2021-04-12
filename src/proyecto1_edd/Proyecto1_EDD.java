@@ -19,15 +19,10 @@ public class Proyecto1_EDD {
     /**
      * @param args the command line arguments
      */
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
         Generadores n = new Generadores();
-        try {
-            n.generar();
-        } catch (IOException ex) {
-            Logger.getLogger(Proyecto1_EDD.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (Exception ex) {
-            Logger.getLogger(Proyecto1_EDD.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        Tests t = new Tests();
+        t.generarAmbos();
     }
 
 }

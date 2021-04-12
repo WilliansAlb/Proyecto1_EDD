@@ -52,17 +52,32 @@ public class Generadores {
         );
     }
     
-    public void prueba(String texto) throws IOException{
-        Lexer nuevo = new Lexer(new StringReader(texto));
-        
-        while(true){
-            Symbol temp = nuevo.next_token();
-            if (temp.value==null){
-                break;
-            } else {
-                System.out.println("Valor: "+temp.value+" Linea: "+temp.left+" Columna: "+temp.right);
-            }
+    public void generar2() throws UnsupportedEncodingException, SilentExit, IOException, Exception {
+        String path2 = System.getProperty("user.dir");
+        String decodedPath = URLDecoder.decode(path2, "UTF-8");
+        String[] rutaS = {"-parser", "parserImg", "-symbols", "symImg", decodedPath + "/src/Analizador/parserImg.cup"};
+        String[] rutaS2 = {decodedPath + "/src/Analizador/LexerImg.flex"};
+        jflex.Main.generate(rutaS2);
+        java_cup.Main.main(rutaS);
+
+        String dP = URLDecoder.decode(path2, "UTF-8");
+
+        Path rutaSym = Paths.get(dP + "/src/Analizador/symImg.java");
+        if (Files.exists(rutaSym)) {
+            Files.delete(rutaSym);
         }
-        
+        Files.move(
+                Paths.get(dP + "/symImg.java"),
+                Paths.get(dP + "/src/Analizador/symImg.java")
+        );
+        Path rutaSin = Paths.get(dP + "/src/Analizador/parserImg.java");
+        if (Files.exists(rutaSin)) {
+            Files.delete(rutaSin);
+        }
+        Files.move(
+                Paths.get(dP + "/parserImg.java"),
+                Paths.get(dP + "/src/Analizador/parserImg.java")
+        );
     }
+    
 }
